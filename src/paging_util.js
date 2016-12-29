@@ -21,7 +21,17 @@ function PagingUtil(currentPage, pageSize) {
     this.orderBy = ""; //排序
     this.countSql = ""; //查询总条数的sql
     this.pagingSql = ""; //分页sql
+    this.sortBy = ""; //排序类型
     this.debug = false; //是否开启调试模式
+}
+
+/**
+ * 排序类型
+ * @param {[type]} sortBy [description]
+ */
+PagingUtil.prototype.setSortBy = function(sortBy) {
+    this.sortBy = sortBy;
+    return this;
 }
 
 
@@ -33,7 +43,6 @@ PagingUtil.prototype.setOrderBy = function(orderBy) {
     this.orderBy = orderBy;
     return this;
 }
-
 
 
 /**
@@ -78,7 +87,17 @@ PagingUtil.prototype.setTable = function(table) {
 PagingUtil.prototype.getPagingSql = function() {
     this.queryFiled = this.queryFiled || "*";
     this.condition = this.condition || "";
-    var orderBy = this.orderBy === "" ? "" : "ORDER BY " + this.orderBy;
+    this.sortBy = this.sortBy || "ASC";
+    var orderBy = "";
+    if (this.orderBy === "" && this.sortBy === "") {
+        orderBy = "";
+    } else {
+        if (this.orderBy === "") {
+            orderBy = "";
+        } else {
+            orderBy = "ORDER BY " + this.orderBy + " " + this.sortBy;
+        }
+    }
     this.pagingSql = "SELECT " + this.queryFiled + " FROM " + this.table + " " + this.condition + " " + orderBy + " LIMIT ?,?";
     return this;
 }
@@ -168,8 +187,6 @@ PagingUtil.prototype.computedStartRow = function() {
 }
 
 
-
-
 /**
  * 分页方法
  * @param  {Function} cb [description]
@@ -189,7 +206,7 @@ PagingUtil.prototype.paging = function(cb) {
     }, function(callback) {
         //分页sql语句
         var sql2 = _this.getPagingSql().pagingSql;
-        var sqlParam=[_this.startRow,_this.pageSize];
+        var sqlParam = [_this.startRow, _this.pageSize];
         if (_this.debug) {
             console.warn("分页sql语句>>>:::::::::::::::::::::::::::::::::");
             console.log(sql2);
