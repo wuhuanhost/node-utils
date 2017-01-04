@@ -2,10 +2,10 @@ var mysql = require('mysql');
 var async = require('async');
 var log = require('./log').logger('db.js');
 var pool = mysql.createPool({
-    host: "192.168.1.100",
+    host: "192.168.1.200",
     user: "root",
     password: "root",
-    database: "db",
+    database: "weixin",
     port: 3306,
     connectionLimit: 10
 })
@@ -69,7 +69,9 @@ exports.execTrans = function(sqlTask, callback) {
                         if (qerr) {
                             console.log("事务执行失败......");
                             conn.rollback(function() {
-                                throw qerr;
+                                // throw qerr;//抛出异常
+                                conn.release();
+                                return callback(qerr, null);
                             });
                         } else {
                             return cb(null, "success");
