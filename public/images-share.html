@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>canvas生成分享图片</title>
+</head>
+
+<body>
+    <canvas id="img" style="border:1px solid #999999;padding:0;margin:0">你的浏览器不支持canvas!</canvas>
+    <button id="saveCanvas">保存图片</button>
+    <script type="text/javascript">
+    /**
+     ** 生成分享图片对象
+     **/
+    function GSImages(canvasId, width, height) {
+        this.canvasId = canvasId;
+        this.canvas = document.getElementById(this.canvasId);
+        this.canvas.width = width === undefined ? 400 : width;
+        this.canvas.height = height === undefined ? 400 : height;
+        this.ctx = this.canvas.getContext("2d");
+        this.init();
+    }
+
+    /**
+     * 初始化分享图片，并且绘制在界面上。
+     * @return {[type]} [description]
+     */
+    GSImages.prototype.init = function() {
+        this.drawRect(0, 0, 600, 100, "red", "stroke");
+        this.drawRect(0, 100, 600, 100, "blue", "fill");
+        this.drawText("20px Georgia", "#fff", "测试文字渲染", 0, 120);
+        this.drawImages("test.jpg", 0, 0, 100, 100);
+        this.drawText("20px Georgia", "red", "测试文字渲染", 0, 90);
+    }
+
+
+    /**
+     * 绘制矩形
+     * @param  {[type]} left   距离左边的像素
+     * @param  {[type]} top    距离上边的像素
+     * @param  {[type]} width  矩形宽度
+     * @param  {[type]} height 矩形高度
+     * @param  {[type]} color  矩形的填充颜色
+     * @param  {[type]} flag   填充矩形还是画一个矩形,默认是填充方式
+     * @return {[type]}        [description]
+     */
+    GSImages.prototype.drawRect = function(left, top, width, height, color, flag) {
+        this.ctx.save();
+        var left = left === "undefined" ? 0 : left;
+        var top = top === "undefined" ? 0 : top;
+        var width = width === "undefined" ? 100 : width;
+        var height = height === "undefined" ? 100 : height;
+        var color = color === "undefined" ? "#333" : color;
+        var flag = flag === "undefined" ? "fill" : flag;
+        this.ctx.fillStyle = color;
+        if (flag === "fill") {
+            this.ctx.fillRect(left, top, width, height);
+        } else {
+            this.ctx.strokeRect(left, top, width, height);
+        }
+        this.ctx.restore();
+    };
+
+
+    /**
+     * 绘制文字
+     * @param  {[type]} font  字体大小和字体样式
+     * @param  {[type]} color 字体颜色
+     * @param  {[type]} text  输入的内容
+     * @param  {[type]} left  距离右边的像素
+     * @param  {[type]} top   距离左边的像素
+     * @return {[type]}       [description]
+     */
+    GSImages.prototype.drawText = function(font, color, text, left, top) {
+        var font = font === "undefined" ? 16 : font;
+        var color = color === "undefined" ? "#333" : color;
+        var left = left === "undefined" ? 0 : left;
+        var right = right === "undefined" ? 0 : right;
+        this.ctx.save();
+        this.ctx.font = font;
+        this.ctx.fillStyle = color;
+        this.ctx.fillText(text, left, top);
+        this.ctx.restore();
+    }
+
+
+    /**
+     * 绘制图片
+     * @param  {[type]} src    图片路径
+     * @param  {[type]} left   距离左边的像素
+     * @param  {[type]} top    距离右边的像素
+     * @param  {[type]} width  图片显示的宽度
+     * @param  {[type]} height 图片显示的高度
+     * @return {[type]}        [description]
+     */
+    GSImages.prototype.drawImages = function(src, left, top, width, height) {
+        var left = left === "undefined" ? 0 : left;
+        var top = top === "undefined" ? 0 : top;
+        var width = width === "undefined" ? 100 : width;
+        var height = height === "undefined" ? 100 : height;
+        var img = new Image();
+        img.src = src;
+        _this = this;
+        img.onload = function() {
+            _this.ctx.globalCompositeOperation = "destination-over";
+            _this.ctx.drawImage(img, left, top, width, height);
+        }
+    }
+
+    var abc = new GSImages("img", 400, 400);
+
+    $("#saveCanvas").addEventListener("click", function() {
+        var dataURL = abc.canvas.toDataURL();
+        console.log(dataURL);
+    });
+
+
+    function $(param) {
+        return document.querySelector(param);
+    }
+
+
+
+
+
+    //http://www.jb51.net/html5/443828.html  文字对齐方式参考
+    </script>
+</body>
+
+</html>
