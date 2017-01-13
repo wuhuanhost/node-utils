@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+	<meta charset="UTF-8">
+	<title>播放器播放例子</title>
+	<style type="text/css">
+	ul>li{
+		list-style:none;
+		height:36px;
+		width:360px;
+		border-top:1px solid #333;
+		border-left:1px solid #333;
+		border-right:1px solid #333;
+		border-top:1px solid #333;
+		margin-top:0px;
+		line-height:36px;
+		text-indent:.4em;
+	}
+	
+	ul>li:nth-last-child(1){
+		border-bottom:1px solid #333;
+	}
+
+	ul>li span{
+		position:relative;
+		left:180px;
+		padding:10px;
+		cursor:pointer;
+	}
+
+	ul>li span:nth-last-child(1){
+		color:red;
+	}
+
+	ul>li span:nth-last-child(2){
+		color:green;
+	}
+	</style>
+</head>
+<body>
+
+<audio src="" id="audio">你的浏览器不支持audio标签！</audio>
+<hr />
+<ul>
+	<li>测试音频1<span onclick="play('mp3/test1.mp3')">播放</span><span onclick="stop()">暂停</span></li>
+	<li>测试音频2<span onclick="play('mp3/test2.mp3')">播放</span><span onclick="stop()">暂停</span></li>
+	<li>测试音频3<span onclick="play('mp3/test3.mp3')">播放</span><span onclick="stop()">暂停</span></li>
+</ul>
+<script type="text/javascript">
+var audio=document.getElementById("audio");
+var currentTime=0;
+var currentSrc="";
+
+//开始播放
+function play(src){
+	if(currentSrc!==src){
+		currentTime=0;
+	}
+	currentSrc=src;
+	audio.src=currentSrc;
+	audio.load();
+	audio.currentTime=currentTime;
+	audio.play();
+}
+
+//暂停播放
+function stop(){
+	currentTime=audio.currentTime;
+	audio.pause();
+
+}
+
+
+</script>
+</body>
+</html>

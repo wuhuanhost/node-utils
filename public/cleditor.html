@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+	<meta charset="UTF-8">
+	<title>编辑器使用</title>
+    <link rel="stylesheet" href="http://premiumsoftware.net/content/cleditor/jquery.cleditor.min.css" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="http://premiumsoftware.net/content/cleditor/jquery.cleditor.min.js"></script>
+    <script>
+        $(document).ready(function (){
+			var el=$("#input").cleditor(); 
+			console.log(el[0])	
+		});
+    </script>
+</head>
+<body>
+    <textarea id="input" name="input"></textarea>
+	<button onclick="getContent()">获取内容</button>
+	<script type="text/javascript">
+	
+	//获取内容
+	function getContent(){
+		console.log($("#input").val());
+	}
+	
+	</script>
+</body>
+</html>  
