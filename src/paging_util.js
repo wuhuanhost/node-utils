@@ -108,7 +108,8 @@ PagingUtil.prototype.getPagingSql = function() {
  * @return {[type]} [description]
  */
 PagingUtil.prototype.getCountSql = function() {
-    this.countSql = "SELECT COUNT(1) AS count FROM " + this.table;
+    this.condition = this.condition || "";
+    this.countSql = "SELECT COUNT(1) AS count FROM " + this.table + " " + this.condition;
     return this;
 }
 
