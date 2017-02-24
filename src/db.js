@@ -2,39 +2,40 @@ var mysql = require('mysql');
 var async = require('async');
 var log = require('./log').logger('db.js');
 var pool = mysql.createPool({
-    host: "192.168.1.200",
+    host: "127.0.0.1",
     user: "root",
     password: "root",
-    database: "weixin",
+    database: "shangyang",
     port: 3306,
+    charset: 'UTF8MB4_GENERAL_CI',
     connectionLimit: 10
-})
+});
 
 //执行sql语句的方法，包括增删改查
 exports.execSql = function(sql, param, callback) {
-        pool.getConnection(function(err, connection) {
-            if (err) {
-                log.error("数据库连接超时！");
-                return callback(err, null);
-            } else {
-                connection.query(sql, param, function(error, results) {
-                    connection.release(); //关掉连接，释放资源
-                    if (error) {
-                        log.error(error);
-                        callback(error, null);
-                    } else {
-                        callback(null, results);
-                    }
-                });
-            }
-        });
-    }
-    /**
-     * 事物对象
-     * @param {[type]}   sql      [description]
-     * @param {[type]}   params   [description]
-     * @param {Function} callback [description]
-     */
+    pool.getConnection(function(err, connection) {
+        if (err) {
+            log.error("数据库连接超时！");
+            return callback(err, null);
+        } else {
+            connection.query(sql, param, function(error, results) {
+                connection.release(); //关掉连接，释放资源
+                if (error) {
+                    log.error(error);
+                    callback(error, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+        }
+    });
+};
+/**
+ * 事物对象
+ * @param {[type]}   sql      [description]
+ * @param {[type]}   params   [description]
+ * @param {Function} callback [description]
+ */
 exports.addSqlTask = function(sql, params, callback) {
     if (callback) {
         return callback(null, {
@@ -58,7 +59,7 @@ exports.execTrans = function(sqlTask, callback) {
         conn.beginTransaction(function(err) {
             if (err) {
                 console.log(err);
-                return;
+                return callback(err, null);
             }
             var sqlTaskFun = [];
             sqlTask.forEach(function(sqlTask) {
@@ -74,14 +75,15 @@ exports.execTrans = function(sqlTask, callback) {
                                 return callback(qerr, null);
                             });
                         } else {
-                            return cb(null, "success");
+                            // return cb(null, "success");
+                            return cb(null, result);//将每次执行结果返回
                         }
                     });
                 }
                 sqlTaskFun.push(tempSqlTaskFun);
             });
 
-            async.series(sqlTaskFun, function(err) {
+            async.series(sqlTaskFun, function(err, result) {
                 if (err) {
                     console.log(err);
                     conn.rollback(function(err) {
@@ -99,7 +101,8 @@ exports.execTrans = function(sqlTask, callback) {
                         } else {
                             console.log("transaction commit success!!!");
                             conn.release(); //关闭连接，释放资源
-                            callback(null, info);
+                            // callback(null, info);
+                            callback(null, result);//返回给调用方执行结果
                         }
                     });
                 }
@@ -108,10 +111,3 @@ exports.execTrans = function(sqlTask, callback) {
     });
 }
 
-
-//执行存储过程的方法
-// module.exports = {
-//     addSqlTask: addSqlTask,
-//     execSql: execSql,
-//     execTrans: execTrans
-// };
