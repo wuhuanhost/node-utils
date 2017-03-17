@@ -7,6 +7,7 @@
 //数据校验框架
 function NodeValidation() {
     this.count = 0; //处理规则计数
+    this.filedCount = 0; //字段数统计
     this.validationData; //待校验的数据对象，第一个参数
     this.validationRules; //用户配置的校验规则，第二个参数
     this.callback; //校验完成后的回调函数，第三个参数
@@ -44,6 +45,9 @@ function NodeValidation() {
 NodeValidation.prototype = {
     init: function(data, validationRules, callback) {
         this.validationData = data;
+        for (var vd in data) {
+            this.filedCount++;
+        }
         this.validationRules = validationRules;
         this.callback = callback;
         this.actionRules(this.validationRules);
@@ -67,6 +71,9 @@ NodeValidation.prototype = {
         for (var i = 0, len = acrl.length; i < len; i++) {
             filed = acrl[i].filed;
             filedValue = this.validationData[filed];
+            if (!filedValue) {
+                throw filed+"字段无效!";
+            }
             for (var j = 0, rlen = acrl[i].rules.length; j < rlen; j++) {
                 var flag = this.execRegExp(filedValue, acrl[i].rules[j].rule);
                 this.count++;
@@ -88,6 +95,9 @@ NodeValidation.prototype = {
         for (var i = 0, len = acl.length; i < len; i++) {
             filed = acl[i].filed;
             filedValue = this.validationData[filed];
+            if (!filedValue) {
+                throw filed+"字段无效!";
+            }
             for (var j = 0, rlen = acl[i].rules.length; j < rlen; j++) {
                 var flag = this.rulesFunc()[acl[i].rules[j].rule](filedValue, acl[i].rules[j].desc);
                 this.count++;
@@ -97,7 +107,7 @@ NodeValidation.prototype = {
                         filed: filed,
                         fileVal: filedValue,
                         rule: acl[i].rules[j].rule,
-                        ruleDesc:"规则为系统预设",
+                        ruleDesc: "规则为系统预设",
                         msg: this.rulesMsg[acl[i].rules[j].rule].replace('`${rule}`', acl[i].rules[j].desc)
                     });
                 }
@@ -105,7 +115,10 @@ NodeValidation.prototype = {
         };
 
         //执行到这里说明全部通过，就返回success
-        this.callback(true, { success: "success", msg: this.count + "条校验规则全部通过" });
+        this.callback(true, {
+            success: "success",
+            msg: "恭喜你！" + this.filedCount + "个字段，" + this.count + "条校验规则全部通过！"
+        });
     },
     vaild: function(data, validationRules, callback) {
         this.init(data, validationRules, callback);
@@ -171,7 +184,7 @@ NodeValidation.prototype = {
             },
             mobile: function() {
 
-            }//可以添加更多的规则方法
+                } //可以添加更多的规则方法
         }
     }
 };
@@ -182,13 +195,24 @@ NodeValidation.prototype = {
 
 //需要校验的数据
 var data = {
-    name: "a",
-    password: "12312312321"
+    name: "123",
+    password: "122"
 };
 
 //校验规则
 var validationRule = [{
     filed: "name",
+    rules: {
+        required: true,
+        maxLen: 9,
+        minLen: 3
+    },
+    customRules: [{ //自定义规则
+        rule: /\d/, //规则描述，使用正则表达式
+        msg: "字段必须为数字类型" //错误提示消息
+    }]
+}, {
+    filed: "password",
     rules: {
         required: true,
         maxLen: 9,
