@@ -14,7 +14,8 @@ var validation = {
         rule: "\\d", //规则描述，使用正则表达式
         msg: "字段必须为数字类型" //提示消息
     }]
-}
+};
+
 
 //数据校验框架
 function NodeValidation() {
@@ -153,3 +154,49 @@ NodeValidation.prototype = {
 var nvasd = new NodeValidation();
 nvasd.init(validation);
 console.log(nvasd.checkRules(nvasd.fileValue, nvasd.customRules));
+
+/**
+**使用方法
+**/
+
+//需要校验的数据
+var data={
+	name:"root",
+	password:"12312312321"
+};
+
+//校验规则
+var validationRule = [{
+    filed: "name",
+    rules: {
+        required: true,
+        maxLen: 9,
+        minLen: 3
+    },
+    customRules: [{ //自定义规则
+        rule: "\\d", //规则描述，使用正则表达式
+        msg: "字段必须为数字类型" //提示消息
+    }],
+	customFunc:function(){//自定义处理函数
+		console.log("自定义处理函数，用于调用其它函数或者接口进行数据校验");
+	}
+},{
+    filed: "password",
+    rules: {
+        required: true,
+        maxLen: 9,
+        minLen: 3
+    }
+}];
+
+
+//框架使用方法
+var nv = new NodeValidation()
+nv.vaild(data,validationRule,function(result){
+	console.log("校验结果返回值");
+});
+
+
+//思考：
+//1、两个字段如何使用相同的校验规则
+//2、如何让调用方使用简单
