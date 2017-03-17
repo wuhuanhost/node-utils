@@ -71,12 +71,13 @@ NodeValidation.prototype = {
                 var flag = this.execRegExp(filedValue, acrl[i].rules[j].rule);
                 this.count++;
                 if (!flag) {
-                    return this.callback({
+                    return this.callback(false, {
                         success: false,
                         filed: filed,
                         fileVal: filedValue,
                         rule: acrl[i].rules[j].rule,
-                        msg: acrl[i].rules[j].msg
+                        ruleDesc: "规则为正则表达式",
+                        error: acrl[i].rules[j].msg
                     });
                 }
             }
@@ -91,19 +92,20 @@ NodeValidation.prototype = {
                 var flag = this.rulesFunc()[acl[i].rules[j].rule](filedValue, acl[i].rules[j].desc);
                 this.count++;
                 if (!flag) {
-                    return this.callback({
+                    return this.callback(false, {
                         success: false,
                         filed: filed,
                         fileVal: filedValue,
                         rule: acl[i].rules[j].rule,
-                        msg: this.rulesMsg[acl[i].rules[j].rule].replace('`${rule}`', acl[i].rules[j].desc)
+                        ruleDesc:"规则为系统预设",
+                        error: this.rulesMsg[acl[i].rules[j].rule].replace('`${rule}`', acl[i].rules[j].desc)
                     });
                 }
             }
         };
 
         //执行到这里说明全部通过，就返回success
-        this.callback({ success: "success", msg: this.count + "条校验规则全部通过" });
+        this.callback(true, { success: "success", msg: this.count + "条校验规则全部通过" });
     },
     vaild: function(data, validationRules, callback) {
         this.init(data, validationRules, callback);
@@ -169,7 +171,7 @@ NodeValidation.prototype = {
             },
             mobile: function() {
 
-            }
+            }//可以添加更多的规则方法
         }
     }
 };
@@ -201,8 +203,9 @@ var validationRule = [{
 
 //框架使用方法
 var nv = new NodeValidation()
-nv.vaild(data, validationRule, function(result) {
+nv.vaild(data, validationRule, function(result, message) {
     console.log(result);
+    console.log(message)
 });
 
 
