@@ -179,7 +179,11 @@ var validationRule = [{
     customRules: [{ //自定义规则
         rule: "\\d", //规则描述，使用正则表达式
         msg: "字段必须为数字类型" //提示消息
-    }]
+    }],
+	func:function(){//自定义处理函数
+	
+	
+	}
 },{
     filed: "password",
     rules: {
