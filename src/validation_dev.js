@@ -77,7 +77,7 @@ NodeValidation.prototype = {
                         fileVal: filedValue,
                         rule: acrl[i].rules[j].rule,
                         ruleDesc: "规则为正则表达式",
-                        error: acrl[i].rules[j].msg
+                        msg: acrl[i].rules[j].msg
                     });
                 }
             }
@@ -98,7 +98,7 @@ NodeValidation.prototype = {
                         fileVal: filedValue,
                         rule: acl[i].rules[j].rule,
                         ruleDesc:"规则为系统预设",
-                        error: this.rulesMsg[acl[i].rules[j].rule].replace('`${rule}`', acl[i].rules[j].desc)
+                        msg: this.rulesMsg[acl[i].rules[j].rule].replace('`${rule}`', acl[i].rules[j].desc)
                     });
                 }
             }
@@ -196,7 +196,7 @@ var validationRule = [{
     },
     customRules: [{ //自定义规则
         rule: /\d/, //规则描述，使用正则表达式
-        msg: "字段必须为数字类型" //提示消息
+        msg: "字段必须为数字类型" //错误提示消息
     }]
 }];
 
