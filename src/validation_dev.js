@@ -3,26 +3,15 @@
  * @date 2017-03-16
  * @desc node中使用的数据校验的中间件
  */
-var validation = {
-    fileValue: "1",
-    rules: {
-        required: true,
-        maxLen: 9,
-        minLen: 3
-    },
-    customRules: [{ //自定义规则
-        rule: "\\d", //规则描述，使用正则表达式
-        msg: "字段必须为数字类型" //提示消息
-    }]
-};
-
 
 //数据校验框架
 function NodeValidation() {
-    this.fileValue = "";
-    this.customRules = []; //自定义规则数组
-    this.errMsg = {}; //错误消息
-    this.rules = {}; //用户选择的规则的集合
+    this.count = 0; //处理规则计数
+    this.validationData; //待校验的数据对象，第一个参数
+    this.validationRules; //用户配置的校验规则，第二个参数
+    this.callback; //校验完成后的回调函数，第三个参数
+    this.actionRulesList = []; //待执行校验规则数组
+    this.actionCustomRulesList = []; //待执行的自定义校验规则
     this.rulesList = { //默认规则集
         required: true, //必须输入的字段，不能为空，不能为undefined
         maxLen: 8, //字段最大长度
@@ -45,10 +34,6 @@ function NodeValidation() {
         digits: "字段值不是整数",
         number: "字段值不是数字类型"
     };
-    this.successMsg = { //校验争取返回的消息
-        success: "ok",
-        msg: "校验通过",
-    }
 };
 
 /**
@@ -57,86 +42,126 @@ function NodeValidation() {
  * @return {[type]}            [description]
  */
 NodeValidation.prototype = {
-    init: function(validation) {
-        this.fileValue = validation.fileValue;
-        this.customRules = validation.customRules;
-        this.rules = validation.rules;
+    init: function(data, validationRules, callback) {
+        this.validationData = data;
+        this.validationRules = validationRules;
+        this.callback = callback;
+        this.actionRules(this.validationRules);
     },
-    //校验自定义规则
-    checkCustomRules: function(val, customRules) {
-        var rege;
-        for (var i = 0, len = customRules.length; i < len; i++) {
-            rege = eval('/' + customRules[i].rule + '/'); //创建正则表达式
-            msg = customRules[i].msg;
-            result = rege.test(val);
-            if (!result) { //发现错误就停止下面的运行，返回消息给调用方
-                this.errMsg = {
-                    success: "failed",
-                    fileVal: val,
-                    rule: "自定义规则-" + customRules[i].rule,
-                    msg: msg,
+    actionRules: function(vr) { //处理规则数据
+        for (var i = 0, len = vr.length; i < len; i++) {
+            if (vr[i].customRules) { //如果有自定义规则
+                this.parseCustomRules(vr[i].filed, vr[i].customRules);
+            };
+            if (vr[i].rules) {
+                this.parseRules(vr[i].filed, vr[i].rules);
+            };
+        }
+        this.process(this.actionCustomRulesList, this.actionRulesList);
+    },
+    process: function(acrl, acl) { //总处理流程
+        //处理自定义规则数组
+        var acrl = acrl;
+        var filed; //当前处理的字段
+        var filedValue; //当前处理的字段的值
+        for (var i = 0, len = acrl.length; i < len; i++) {
+            filed = acrl[i].filed;
+            filedValue = this.validationData[filed];
+            for (var j = 0, rlen = acrl[i].rules.length; j < rlen; j++) {
+                var flag = this.execRegExp(filedValue, acrl[i].rules[j].rule);
+                this.count++;
+                if (!flag) {
+                    return this.callback({
+                        success: false,
+                        filed: filed,
+                        fileVal: filedValue,
+                        rule: acrl[i].rules[j].rule,
+                        msg: acrl[i].rules[j].msg
+                    });
                 }
-                break;
-            } else {
-                this.errMsg = this.successMsg;
             }
-        }
-        return this.errMsg;
+        };
+
+        //处理默认规则数组
+        var acl = acl;
+        for (var i = 0, len = acl.length; i < len; i++) {
+            filed = acl[i].filed;
+            filedValue = this.validationData[filed];
+            for (var j = 0, rlen = acl[i].rules.length; j < rlen; j++) {
+                var flag = this.rulesFunc()[acl[i].rules[j].rule](filedValue, acl[i].rules[j].desc);
+                this.count++;
+                if (!flag) {
+                    return this.callback({
+                        success: false,
+                        filed: filed,
+                        fileVal: filedValue,
+                        rule: acl[i].rules[j].rule,
+                        msg: this.rulesMsg[acl[i].rules[j].rule].replace('`${rule}`', acl[i].rules[j].desc)
+                    });
+                }
+            }
+        };
+
+        //执行到这里说明全部通过，就返回success
+        this.callback({ success: "success", msg: this.count + "条校验规则全部通过" });
     },
-    //校验默认规则
-    checkRules: function(val, customRules) {
-        for (var key in this.rules) {
-            console.log(key + " ===== " + this.rules[key]);
-            var result = this.rulesFunc()[key](val, this.rules[key]);
-            if (result.success === "failed") {
-                this.errMsg = result;
-                break;
-            } else {
-                this.errMsg = this.successMsg;
-            }
+    vaild: function(data, validationRules, callback) {
+        this.init(data, validationRules, callback);
+    },
+    parseCustomRules: function(filed, rules) { //解析自定义规则
+        var cr = {
+            filed: filed,
+            rules: []
+        };
+        for (var i = 0, len = rules.length; i < len; i++) {
+            cr.rules.push(rules[i]);
+        };
+        this.actionCustomRulesList.push(cr);
+        // console.log(JSON.stringify(this.actionCustomRulesList));
+    },
+    parseRules: function(filed, rules) { //解析默认规则
+        var cr = {
+            filed: filed,
+            rules: []
+        };
+        for (var r in rules) {
+            cr.rules.push({ rule: r, desc: rules[r] });
+        };
+        this.actionRulesList.push(cr);
+        // console.log(JSON.stringify(this.actionRulesList));
+    },
+    execRegExp: function(val, rege) { //执行正则的方法，校验自定义规则
+        var rege = eval(rege);
+        if (rege.test(val)) {
+            return true;
+        } else {
+            return false;
         }
-        return this.errMsg;
     },
     rulesFunc: function() {
         var _this = this;
         return {
             required: function(val, rule) {
-                console.log("required");
                 if (val !== "" && val != undefined) {
-                    return _this.successMsg;
+                    return true;
                 } else {
-                    return {
-                        success: "failed",
-                        fileVal: val,
-                        rule: "required-" + rule,
-                        msg: _this.rulesMsg.required
-                    }
+                    return false;
                 }
             },
             maxLen: function(val, rule) {
                 var valLen = val.length;
                 if (valLen <= parseInt(rule)) {
-                    return _this.successMsg;
+                    return true;
                 } else {
-                    return {
-                        success: "failed",
-                        fileVal: val,
-                        rule: "maxLen-" + rule,
-                        msg: _this.rulesMsg.maxLen.replace(/`\${rule}`/, "{ " + rule + " }") + ",校验字符串长度{ " + valLen + " }",
-                    }
+                    return false;
                 }
             },
             minLen: function(val, rule) {
                 var valLen = val.length;
                 if (valLen >= parseInt(rule)) {
-                    return _this.successMsg;
+                    return true;
                 } else {
-                    return {
-                        success: "failed",
-                        fileVal: val,
-                        rule: "minLen-" + rule,
-                        msg: _this.rulesMsg.minLen.replace(/`\${rule}`/, "{ " + rule + " }") + ",校验字符串长度{ " + valLen + " }",
-                    }
+                    return false;
                 }
             },
             email: function() {
@@ -149,20 +174,14 @@ NodeValidation.prototype = {
     }
 };
 
-
-//测试
-var nvasd = new NodeValidation();
-nvasd.init(validation);
-console.log(nvasd.checkRules(nvasd.fileValue, nvasd.customRules));
-
 /**
-**使用方法
-**/
+ **使用方法
+ **/
 
 //需要校验的数据
-var data={
-	name:"root",
-	password:"12312312321"
+var data = {
+    name: "a",
+    password: "12312312321"
 };
 
 //校验规则
@@ -174,26 +193,16 @@ var validationRule = [{
         minLen: 3
     },
     customRules: [{ //自定义规则
-        rule: "\\d", //规则描述，使用正则表达式
+        rule: /\d/, //规则描述，使用正则表达式
         msg: "字段必须为数字类型" //提示消息
-    }],
-	customFunc:function(){//自定义处理函数
-		console.log("自定义处理函数，用于调用其它函数或者接口进行数据校验");
-	}
-},{
-    filed: "password",
-    rules: {
-        required: true,
-        maxLen: 9,
-        minLen: 3
-    }
+    }]
 }];
 
 
 //框架使用方法
 var nv = new NodeValidation()
-nv.vaild(data,validationRule,function(result){
-	console.log("校验结果返回值");
+nv.vaild(data, validationRule, function(result) {
+    console.log(result);
 });
 
 
