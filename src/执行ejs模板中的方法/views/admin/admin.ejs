@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	html,body{
+		margin:0;
+		padding:0;
+		height:100%;
+		width:100%;
+	}
+	*{
+		box-sizing: border-box;
+	}
+	.container{
+		width:100%;
+		height:100%;
+		/*background:pink;*/
+	}
+	.top{
+		height:100px;
+		width:100%;
+		/*background: blue;*/
+		border-bottom: 1px solid #333333;
+	}
+	.middle{
+		width:100%;
+		height:calc(100% - 100px);
+		/*background: pink;*/
+	}
+	.left{
+		width:360px;
+		height:100%;
+		/*background: green;*/
+		float:left;
+			border-right: 1px solid #333333;
+	}
+	
+	.right{
+		width:calc(100% - 360px);
+		height:100%;
+		/*background: yellow;*/
+		float:left;
+	}
+
+	
+	</style>
+	<script>
+		window.uid='<%= user.uid%>';
+		window.token='<%= user.token%>';
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="top">
+			<%- include top.ejs %>
+		</div>
+		<div class="middle">
+			<div class="left">
+				<!-- 菜单区域 -->
+				<%- include menu.ejs %>
+			</div>
+			<div class="right">
+				<!-- 内容区域 -->
+				<p>getData方法返回的数据
+				<%var abc=getData(_m_,_n_,100)%>
+				<%=abc%></p>
+
+				<p>abx方法返回的数据
+				<%var abx=abx(10,20)%>
+				<%=abx%></p>
+
+				<p>abxsds方法返回的数据
+				<%var asdsad=abxs(10,20)%>
+				<%=asdsad.a%></p>
+
+				<p>abxsds方法返回的数据
+				<%var dsad=abxsdasdsad(100,200)%>
+				<%=dsad%></p>
+
+		        <iframe id="content" name="content"  frameborder="0"></iframe>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
