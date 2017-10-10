@@ -9,7 +9,9 @@ var pool = mysql.createPool({
     port: 3306,
     charset: 'UTF8MB4_GENERAL_CI',
     connectionLimit: 10,
-	debug:true//开启调试模式，打印sql语句
+    dateStrings: true,
+    multipleStatements: true, //同时可以多表查询
+    debug: ["ComQueryPacket"] //输出查询语句
 });
 
 //执行sql语句的方法，包括增删改查
