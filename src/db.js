@@ -8,7 +8,8 @@ var pool = mysql.createPool({
     database: "shangyang",
     port: 3306,
     charset: 'UTF8MB4_GENERAL_CI',
-    connectionLimit: 10
+    connectionLimit: 10,
+	debug:true//开启调试模式，打印sql语句
 });
 
 //执行sql语句的方法，包括增删改查
