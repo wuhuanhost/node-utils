@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>login</title>
+</head>
+<body>
+<form action="/login" method="post" accept-charset="utf-8">
+		<input type="text" name="account">
+		<br>
+		<input type="text" name="password">
+		<br>
+		<input type="submit" value="提交">
+</form>
+<script>
+
+if(GetQueryString("msg")){
+	alert(GetQueryString("msg"))
+}
+
+function GetQueryString(name){
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+</script>
+</body>
+</html>

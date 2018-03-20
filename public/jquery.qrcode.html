@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .qrcode {
+            position: relative;
+
+        }
+
+        .qrcodeIcon {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="qrcode" class="qrcode">
+        <img id="qrcodeIcon" class="qrcodeIcon" width="40px" height="40px" src="./images/ios.jpg" alt="">
+    </div>
+    <script src="./javascripts/jquery.min.js"></script>
+    <script src="./javascripts/jquery.qrcode.min.js"></script>
+    <script type="text/javascript">
+        console.log($('#img-buffer')[0])
+        $("#qrcode").qrcode({
+            render: "canvas",
+            ecLevel: 'H', //识别度
+            fill: '#000', //二维码颜色
+            background: '#ffffff', //背景颜色
+            quiet: 2, //边距
+            width: 200, //宽度
+            height: 200,
+            text: "http://www.yichuang.com", //二维码内容
+            //中间logo start
+            mode: 4,
+            mSize: 11 * 0.01,
+            mPosX: 50,
+            mPosY: 50,
+            image: $('#img-buffer')[0], //logo图片
+            //中间logo end
+            label: 'jQuery.qrcode',
+            fontname: 'Ubuntu',
+            fontcolor: '#ff9818',
+        });
+
+        //自己实现logon的嵌入    
+        var margin = ($(".qrcode").height() - $(".qrcodeIcon").height()) / 2; //控制Logo图标的位置
+        $(".qrcodeIcon").css("margin", margin);
+
+
+
+        //中文内容需要转码成utf-8
+        function utf16to8(str) {
+            var out, i, len, c;
+            out = "";
+            len = str.length;
+            for (i = 0; i < len; i++) {
+                c = str.charCodeAt(i);
+                if ((c >= 0x0001) && (c <= 0x007F)) {
+                    out += str.charAt(i);
+                } else if (c > 0x07FF) {
+                    out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                    out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                } else {
+                    out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                }
+            }
+            return out;
+        }
+    </script>
+</body>
+
+</html>
