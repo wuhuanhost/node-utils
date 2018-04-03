@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/mobiscroll/mobiscroll.jquery.min.css">
+</head>
+
+<body>
+
+    <input type="text" id="useraddress-info" style="margin-left:20px;width: 0%;height: 40px;font-size: 14px;border: 0px" />
+    <ol id="useraddress" style="display:none">
+    </ol>
+    <script src="../javascripts/jquery.min.js"></script>
+    <script src="../javascripts/distpicker.data.js"></script>
+    <script src="../javascripts/mobiscroll.jquery.min.js"></script>
+    <script>
+
+        $(function () {
+            initData();
+            $('#useraddress').mobiscroll().treelist({
+                theme: 'ios',
+                placeholder: '请选择地区',
+                labels: ['省份', '城市', '地区'],
+                showLabel: true,
+                lang: 'zh',
+                showinput: false,
+                defaultValue: ['陕西省', '西安市', '长安区'],
+                inputClass: 'tmp',
+                onSet: function (event, inst) {
+                    console.log(event)
+                    console.log(inst)
+
+                    var arr = event.valueText.split(" ");
+
+                    var sf = $('[aria-label="省份"][data-index=0]').children().children().filter("[data-val=" + arr[0] + "]").html();
+                    var cs = $('[aria-label="城市"][data-index=1]').children().children().filter("[data-val=" + arr[1] + "]").html();
+                    var dq = $('[aria-label="地区"][data-index=2]').children().children().filter("[data-val=" + arr[2] + "]").html();
+                    console.log(sf + "  " + cs + "   " + dq)
+                    $("#useraddress").val(sf + " " + cs + " " + dq);
+                    console.log($("#useraddress_dummy").html())
+                }
+            });
+            //默认值
+            $("#useraddress_dummy").attr("value","陕西省 西安市 长安区");
+            // $("#useraddress_dummy").attr("value", "陕西省 西安市 长安区")
+            // $('#useraddress').mobiscroll('disable');
+            // $('#useraddress').mobiscroll('setVal', "陕西省 西安市 长安区");
+        });
+
+
+        function initData() {
+            var proviceArr = ChineseDistricts['86'];
+            // console.log(proviceArr)
+            var html = "";
+            $.each(proviceArr, function (key, value) {
+                //  console.log(key+"  "+value)
+                html += "<li data-val=" + value + ">" + value;
+                //获取省省份下面的市区
+                var city = ChineseDistricts[key];
+                html += "<ol>";
+                if (city != null) {
+
+                    $.each(city, function (key1, value1) {
+                        html += "<li data-val=" + value1 + ">" + value1;
+                        var area1 = ChineseDistricts[key1];
+                        // console.log(area1)
+                        html += "<ol>";
+                        if (area1 != null) {
+
+                            $.each(area1, function (key2, value2) {
+                                html += "<li data-val=" + value2 + ">" + value2 + "</li>";
+
+                            });
+                        }
+                        html += "</ol>";
+                    })
+
+                    html += "</ol>";
+                    html += "</li>";
+                }
+                html += "</li>";
+            })
+            // console.log("==============")
+            console.log(html)
+            $("#useraddress").html(html)
+        }
+
+
+    </script>
+</body>
+
+</html>
