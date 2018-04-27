@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <title>优惠券</title>
+    <style>
+        html,
+        body {
+            background: #e2f3f3;
+            width: 100%;
+            height: 100%;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .stamp {
+            height: 190px;
+            width: 680px;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .stamp .info {
+            height: 100%;
+            width: 500px;
+            background: #ffffff;
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .stamp .info::after {
+            content: ' ';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e2f3f3;
+            bottom: -10px;
+            right: -10px;
+            border-radius: 50%;
+            /* z-index: -1; */
+        }
+        
+        .stamp .copy {
+            width: 180px;
+            height: 100%;
+            border-left: 2px dashed #ffffff;
+            background: #53b3ed;
+            position: relative;
+        }
+        
+        .stamp .copy::before {
+            content: ' ';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e2f3f3;
+            bottom: -10px;
+            left: -10px;
+            border-radius: 50%;
+            /* z-index: -1; */
+        }
+        
+        .stamp .copy::after {
+            content: ' ';
+            position: absolute;
+            right: -10px;
+            height: 190px;
+            width: 10px;
+            background: radial-gradient(rgba(226, 243, 243, 1) 0, rgba(226, 243, 243, 1) 3px, #53b3ed 5px);
+            background-size: 15px 15px;
+            background-position: 2px -2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stamp">
+        <div class="info">
+
+        </div>
+        <div class="copy"></div>
+    </div>
+</body>
+
+</html>

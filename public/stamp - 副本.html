@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <title>优惠券</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        .demo {
+            width: 100%;
+        }
+        
+        .stamp * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            font-family: "Microsoft YaHei", 'Source Code Pro', Menlo, Consolas, Monaco, monospace;
+        }
+        
+        .stamp {
+            max-width: 100%;
+            height: 140px;
+            /* padding: 0 10px; */
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stamp:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -5px;
+            /* z-index: -1; */
+            width: 15px;
+            height: 140px;
+            background: red;
+            background: radial-gradient(rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 1) 5px, #f39b00 5px);
+            background-size: 15px 15px;
+            background-position: -1px -4px;
+        }
+        
+        .stamp:after {
+            content: '';
+            position: absolute;
+            top: 0px;
+            right: -5px;
+            bottom: 0px;
+            width: 15px;
+            /* z-index: -2; */
+            background: radial-gradient(rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 1) 5px, #f5aa26 5px);
+            background-size: 15px 15px;
+            background-position: 1px -4px;
+        }
+        
+        .stamp i {
+            position: absolute;
+            right: -32px;
+            top: 45px;
+            height: 190px;
+            width: 460px;
+            background-color: rgba(255, 255, 255, .15);
+            transform: rotate(-30deg);
+        }
+        
+        .stamp .par {
+            float: left;
+            padding: 16px 15px;
+            width: 65%;
+            /* border-right: 2px dashed rgba(255, 255, 255, .3); */
+            text-align: left;
+        }
+        
+        .stamp .line {
+            float: left;
+            padding: 0;
+            width: 15px;
+            height: 100%;
+            background: radial-gradient(rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 1) 5px, #f39b00 5px);
+            background-size: 15px 15px;
+            background-position: 0px -4px;
+        }
+        
+        .stamp .line:after {
+            box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
+        }
+        
+        .stamp .par p {
+            color: #fff;
+            font-size: 16px;
+            line-height: 21px;
+        }
+        
+        .stamp .par span {
+            font-size: 24px;
+            color: #fff;
+            margin-right: 5px;
+            line-height: 65px;
+        }
+        
+        .stamp .par .sign {
+            font-size: 20px;
+        }
+        
+        .stamp .par sub {
+            position: relative;
+            top: -5px;
+            color: rgba(255, 255, 255, .8);
+        }
+        
+        .stamp .copy {
+            display: inline-block;
+            /* padding: 21px 14px; */
+            width: clac(100% - 65% - 15px);
+            vertical-align: text-bottom;
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            line-height: initial;
+        }
+        
+        .stamp .copy p {
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        
+        .stamp .copy button {
+            width: 100%;
+            font-size: 16px;
+            height: 20px;
+            background: #ffffff;
+            border: 0;
+        }
+        
+        .stamp01 {
+            background: #F39B00;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="demo-container demo">
+
+        <div class="demo">
+            <div class="stamp stamp01">
+                <div class="par">
+                    <p>XXXXXX折扣店</p><sub class="sign">￥</sub><span>50.00</span><sub>优惠券</sub>
+                    <p>订单满100.00元</p>
+                </div>
+                <div class="line"></div>
+                <div class="copy">副券
+                    <p>2015-08-13<br>2016-08-13</p>
+                    <p><button>赠送</button></p>
+                </div>
+                <i></i>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
