@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>百度语音合成测试</title>
+</head>
+
+<body>
+    <audio src="/uploads/baidu-mp3/baidutest.mp3" id="audio" autoplay="true" controls="controls"></audio>
+    <input type="text" placeholder="输入你需要合成语音的文字" id="text">
+    <button onclick="send()">语音合成并且播放</button>
+    <script src="https://cdn.bootcss.com/socket.io/2.1.0/socket.io.js"></script>
+    <script>
+    var socket = io();
+    window.onload = function() {
+
+        socket.on('play-video', function(result) {
+            console.log(result)
+            var src = result.data;
+            var sound = document.querySelector("#audio");
+            console.log(sound)
+            //选择文件  
+            sound.src = src;
+            //加载
+            sound.load();
+            //播放  
+            sound.play();
+        })
+    }
+
+    function send() {
+        var text = document.querySelector("#text").value;
+        if (!text) {
+            alert("text不能为空");
+        }
+        socket.emit('send-text', {
+            data: text
+        })
+    }
+    </script>
+</body>
+
+</html>
