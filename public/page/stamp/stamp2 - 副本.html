@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <title>优惠券</title>
+    <style>
+        html,
+        body {
+            background: #f3f3f3;
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .stamp {
+            height: 95px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+            /* padding: 10px; */
+        }
+        
+        .stamp .info {
+            height: 100%;
+            flex: 1;
+            border-radius: 2px;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .stamp .info .left {
+            /* width: 5px; */
+            /* height: 100%; */
+            /*background: red;*/
+            /* background-image: url('../../images/icon-left.png'); */
+            /* background-size: 5px 95px; */
+            /* background-repeat: no-repeat; */
+            /*background-color: red;*/
+        }
+        
+        .stamp .info .content {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            /*background: #eeeeee;   */
+            background: #ffffff;
+            box-shadow: 0px 0px 4px #aaa;
+            position: relative;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .stamp .info .content .cover {
+            width: 55px;
+            height: 55px;
+            /* background: red; */
+            padding: 5px;
+        }
+        
+        .stamp .info .content .cover img {
+            width: 45px;
+            height: 45px;
+            /* background: red; */
+            border-radius: 50%;
+        }
+        
+        .stamp .info .content .remark {
+            flex: 1;
+            height: 95px;
+            /*background: green;*/
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 4px;
+            /* align-items: center; */
+        }
+        
+        .stamp .info .right {
+            width: 7px;
+            height: 100%;
+            position: relative;
+            /*background: pink;*/
+            /* background-image: url('../../images/icon-right.png'); */
+            /* background-size: 7px 95px;
+            background-repeat: no-repeat; */
+            background: #ffffff;
+            overflow: hidden;
+            /* box-shadow: 0px -10px 4px #aaa; */
+        }
+        
+        .stamp .info .content::before {
+            content: ' ';
+            position: absolute;
+            width: 7px;
+            right: -7px;
+            height: 2px;
+            top: 0px;
+            /* background: red; */
+            box-shadow: 0px -2px 2px #dddddd;
+            /* overflow: hidden; */
+            z-index: 0;
+        }
+        
+        .stamp .info .right::after {
+            content: ' ';
+            position: absolute;
+            width: 14px;
+            left: 0px;
+            height: 14px;
+            background-color: #f3f3f3;
+            border-radius: 14px;
+            bottom: -7px;
+            z-index: 1;
+            box-shadow: 0px 0px 4px #aaa inset;
+        }
+        
+        .stamp .copy {
+            width: 115px;
+            height: 100%;
+            /*background: #53b3ed;*/
+            display: flex;
+        }
+        
+        .stamp .copy .left {
+            width: 7px;
+            height: 100%;
+            /*background: green;*/
+        }
+        
+        .stamp .copy .content {
+            flex: 1;
+            /* box-shadow: 4px 0 10px #eee; */
+            /* background: #eeeeee; */
+        }
+        
+        .stamp .copy .right {
+            width: 5px;
+            height: 100%;
+            /*background: pink;*/
+        }
+        
+        .stamp .use {
+            padding-right: 10px;
+        }
+        
+        .stamp .copy .content {
+            background: #53b3ed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        /* 可用加载的背景图片 */
+        
+        .stamp .copy .left.usable {
+            /* background-image: url('../../images/icon-copy-left.png'); */
+            /* background-size: 7px 95px; */
+            /* background-repeat: no-repeat; */
+            position: relative;
+            background: #53b3ed;
+            overflow: hidden;
+        }
+        
+        .stamp .copy .left.usable::before {
+            /* background-image: url('../../images/icon-copy-left.png'); */
+            /* background-size: 7px 95px; */
+            /* background-repeat: no-repeat; */
+            position: absolute;
+            content: ' ';
+            top: 0px;
+            right: 2px;
+            width: 2px;
+            border-right: 1px dashed #ffffff;
+            height: 95px;
+        }
+        
+        .stamp .copy .left.usable::after {
+            /* background-image: url('../../images/icon-copy-left.png'); */
+            /* background-size: 7px 95px; */
+            /* background-repeat: no-repeat; */
+            position: absolute;
+            content: ' ';
+            bottom: -7px;
+            right: 0;
+            width: 14px;
+            height: 14px;
+            background: #f3f3f3;
+            border-radius: 14px;
+            box-shadow: 0px 0px 4px #aaa inset;
+        }
+        
+        .stamp .copy .content.usable .btn {
+            background: #ffffff;
+            width: 55px;
+            height: 23px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 23px;
+            color: #53b3ed;
+            margin-top: 6px;
+            box-shadow: 0 -2px 4px 1px #ccc inset;
+        }
+        
+        .stamp-time {
+            font-size: 12px;
+            color: #ffffff;
+        }
+        
+        .stamp .copy .content.used .btn {
+            font-size: 14px;
+            color: #ffffff;
+        }
+        
+        .stamp .copy .content.expire .btn {
+            width: 46px;
+            height: 40px;
+            font-size: 16px;
+            background-image: url('../../images/icon-tuikuan.png');
+            background-size: 46px 40px;
+        }
+        
+        .stamp .copy .right.usable {
+            /* background-image: url('../../images/icon-copy-right.png'); */
+            background: #f3f3f3;
+            background: radial-gradient(rgba(136, 136, 136, 1) 0, rgba(243, 243, 243, 1) 5px, #53b3ed 6px);
+            background-size: 15px 10px;
+            background-position: 0px 0px;
+        }
+        /**已经使用加载的样式**/
+        
+        .stamp .copy .left.used {
+            position: relative;
+            background: #ee7a53;
+            overflow: hidden;
+            /* background-image: url('../../images/icon-copy-left-1.png');
+            background-size: 7px 95px;
+            background-repeat: no-repeat; */
+        }
+        
+        .stamp .copy .left.used::before {
+            /* background-image: url('../../images/icon-copy-left.png'); */
+            /* background-size: 7px 95px; */
+            /* background-repeat: no-repeat; */
+            position: absolute;
+            content: ' ';
+            top: 0px;
+            right: 2px;
+            width: 2px;
+            border-right: 1px dashed #ffffff;
+            height: 95px;
+        }
+        
+        .stamp .copy .left.used::after {
+            /* background-image: url('../../images/icon-copy-left.png'); */
+            /* background-size: 7px 95px; */
+            /* background-repeat: no-repeat; */
+            position: absolute;
+            content: ' ';
+            bottom: -7px;
+            right: 0;
+            width: 14px;
+            height: 14px;
+            background: #f3f3f3;
+            border-radius: 14px;
+            box-shadow: 0px 0px 4px #aaa inset;
+        }
+        
+        .stamp .copy .content.used {
+            background: #ee7a53;
+            position: relative;
+        }
+        
+        .stamp .copy .content.used:before {
+            content: ' ';
+            top: 10px;
+            right: 6px;
+            border-radius: 16px;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #ffffff;
+            box-shadow: 0px 2px 6px 0px #aaaaaa inset;
+        }
+        
+        .stamp .copy .right.used {
+            /* background-image: url('../../images/icon-copy-right-1.png');
+            background-size: 5px 95px;
+            background-repeat: no-repeat; */
+            background: #f3f3f3;
+            background: radial-gradient(rgba(136, 136, 136, 1) 0, rgba(243, 243, 243, 1) 5px, #ee7a53 6px);
+            background-size: 15px 10px;
+            background-position: 0px 0px;
+        }
+        /**已作废图片**/
+        
+        .stamp .copy .left.expire {
+            position: relative;
+            background: #cccccc;
+            overflow: hidden;
+            /* background-image: url('../../images/icon-copy-left-1.png');
+            background-size: 7px 95px;
+            background-repeat: no-repeat; */
+        }
+        
+        .stamp .copy .left.expire::before {
+            /* background-image: url('../../images/icon-copy-left.png'); */
+            /* background-size: 7px 95px; */
+            /* background-repeat: no-repeat; */
+            position: absolute;
+            content: ' ';
+            top: 0px;
+            right: 2px;
+            width: 14px;
+            border-right: 1px dashed #ffffff;
+            height: 95px;
+        }
+        
+        .stamp .copy .left.expire::after {
+            /* background-image: url('../../images/icon-copy-left.png'); */
+            /* background-size: 7px 95px; */
+            /* background-repeat: no-repeat; */
+            position: absolute;
+            content: ' ';
+            bottom: -7px;
+            right: 0;
+            width: 14px;
+            height: 14px;
+            background: #f3f3f3;
+            border-radius: 14px;
+            box-shadow: 0px 0px 4px #aaa inset;
+        }
+        
+        .stamp .copy .content.expire {
+            background: #cccccc;
+        }
+        
+        .stamp .copy .right.expire {
+            /* background-image: url('../../images/icon-copy-right-2.png');
+            background-size: 5px 95px;
+            background-repeat: no-repeat; */
+            background: #f3f3f3;
+            background: radial-gradient(rgba(136, 136, 136, 1) 0, rgba(243, 243, 243, 1) 5px, #cccccc 6px);
+            background-size: 15px 10px;
+            background-position: 0px 0px;
+        }
+        /**---------------公共样式----------------**/
+        
+        .stamp-title {
+            font-size: 14px;
+            height: 24px;
+            line-height: 24px;
+            margin: 0
+        }
+        
+        .stamp-remark {
+            font-size: 14px;
+            height: 24px;
+            line-height: 24px;
+            margin: 0;
+            color: #666666;
+        }
+        
+        .stamp-price {
+            font-size: 16px;
+            height: 24px;
+            line-height: 24px;
+            margin: 0;
+            color: #ffffff;
+        }
+        
+        .stamp .expire .stamp-price {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stamp">
+        <div class="info">
+            <div class="left"></div>
+            <div class="content">
+                <div class="cover"><img src="http://117.34.70.83:8888/logo/1517898248029.jpg" alt=""></div>
+                <div class="remark">
+                    <p class="stamp-title">每一天便利店</p>
+                    <p class="stamp-remark">4元购5元抵用券</p>
+                    <p class="stamp-remark">123454564512345</p>
+                </div>
+            </div>
+            <div class="right"></div>
+        </div>
+        <div class="copy">
+            <div class="left usable"></div>
+            <div class="content usable">
+                <div class="stamp-price">¥1.00</div>
+                <div class="stamp-time">有效期:2018.04.28</div>
+                <div class="btn">赠送</div>
+            </div>
+            <div class="right usable"></div>
+        </div>
+    </div>
+    <div class="stamp">
+        <div class="info use">
+            <div class="left"></div>
+            <div class="content">
+                <div class="cover"><img src="http://117.34.70.83:8888/logo/1517898248029.jpg" alt=""></div>
+                <div class="remark">
+                    <p class="stamp-title">4元购5元抵用券</p>
+                    <p class="stamp-remark">操作员名称：咸宁中路店</p>
+                    <p class="stamp-remark">123454564512345</p>
+                </div>
+            </div>
+            <div class="right"></div>
+        </div>
+        <div class="copy">
+            <div class="left used"></div>
+            <div class="content used">
+                <div class="stamp-price">¥1.00</div>
+                <div class="btn">核销时间</div>
+                <div class="stamp-time">2018-04-28 12:12</div>
+            </div>
+            <div class="right used"></div>
+        </div>
+    </div>
+    <div class="stamp">
+        <div class="info">
+            <div class="left"></div>
+            <div class="content">
+                <div class="cover"><img src="http://117.34.70.83:8888/logo/1517898248029.jpg" alt=""></div>
+                <div class="remark">
+                    <p class="stamp-title">每一天便利店</p>
+                    <p class="stamp-remark">4元购5元抵用券</p>
+                    <p class="stamp-remark">123454564512345</p>
+                </div>
+            </div>
+            <div class="right"></div>
+        </div>
+        <div class="copy">
+            <div class="left expire"></div>
+            <div class="content expire">
+                <div class="btn"></div>
+                <div class="stamp-price">¥1.00</div>
+                <div class="stamp-time">已过期</div>
+            </div>
+            <div class="right expire"></div>
+        </div>
+    </div>
+</body>
+
+</html>
