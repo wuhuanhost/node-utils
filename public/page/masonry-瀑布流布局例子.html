@@ -86,16 +86,18 @@
 
 
         </div>
-        <div class="grid-item grid-item--height1">4</div>
+        <div class="grid-item grid-item--height1">2</div>
+        <div class="grid-item grid-item--height2">3</div>
+        <div class="grid-item grid-item--height3">4</div>
         <div class="grid-item grid-item--height2">5</div>
-        <div class="grid-item grid-item--height3">6</div>
-        <div class="grid-item grid-item--height2">7</div>
 
     </div>
 
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/masonry/4.2.1/masonry.pkgd.min.js"></script>
     <script>
+        //插件官网：https://masonry.desandro.com/
+
         //初始化
         $('.grid').masonry({
             columnWidth: '.grid-sizer',
@@ -105,22 +107,30 @@
             horizontalOrder: true
         });
 
+
+        /**
+         * 获取页面显示的grid子元素的数量
+         **/
+        function getViewItemCount() {
+            return $('.grid').children().size() - 2;
+        }
+
         function add1() {
-            var el = $('<div class="grid-item grid-item--height1">a</div>');
+            var el = $('<div class="grid-item grid-item--height1">' + parseInt(getViewItemCount() + 1) + '</div>');
             $(".grid").append(el); //动态添加元素
             $('.grid').masonry('appended', el, true); //appended是添加完成后重新计算
             scrollToBottom();
         }
 
         function add2() {
-            var el = $('<div class="grid-item grid-item--height2">b</div>');
+            var el = $('<div class="grid-item grid-item--height2">' + parseInt(getViewItemCount() + 1) + '</div>');
             $(".grid").append(el);
             $('.grid').masonry('appended', el, true);
             scrollToBottom();
         }
 
         function add3() {
-            var el = $('<div class="grid-item grid-item--height3">c</div>');
+            var el = $('<div class="grid-item grid-item--height3">' + parseInt(getViewItemCount() + 1) + '</div>');
             $(".grid").append(el);
             $('.grid').masonry('appended', el, true);
             scrollToBottom();
