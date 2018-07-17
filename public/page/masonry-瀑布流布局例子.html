@@ -109,18 +109,30 @@
             var el = $('<div class="grid-item grid-item--height1">a</div>');
             $(".grid").append(el); //动态添加元素
             $('.grid').masonry('appended', el, true); //appended是添加完成后重新计算
+            scrollToBottom();
         }
 
         function add2() {
             var el = $('<div class="grid-item grid-item--height2">b</div>');
             $(".grid").append(el);
             $('.grid').masonry('appended', el, true);
+            scrollToBottom();
         }
 
         function add3() {
             var el = $('<div class="grid-item grid-item--height3">c</div>');
             $(".grid").append(el);
             $('.grid').masonry('appended', el, true);
+            scrollToBottom();
+        }
+
+
+        /**
+         * 滚动到页面底部
+         * */
+        function scrollToBottom() { //滚动到底部
+            var h = $(document).height() - $(window).height();
+            $(document).scrollTop(h);
         }
     </script>
 </body>
