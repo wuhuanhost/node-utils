@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+        /* ---- grid ---- */
+        
+        .grid {
+            background: #ffffff;
+        }
+        /* clearfix */
+        
+        .grid:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        /* ---- grid-item ---- */
+        
+        .grid-sizer,
+        .grid-item {
+            width: 48%;
+        }
+        
+        .gutter-sizer {
+            width: 4%;
+        }
+        
+        .grid-item {
+            min-height: 120px;
+            float: left;
+            background: pink;
+            border: 2px solid #333;
+            border-color: hsla(0, 0%, 0%, 0.5);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .grid-item--height1 {
+            height: 120px;
+        }
+        
+        .grid-item--height2 {
+            height: 160px;
+        }
+        
+        .grid-item--height3 {
+            min-height: 200px;
+        }
+        
+        .grid-item--height4 {
+            height: 90px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid">
+        <div class="grid-sizer"></div>
+        <div class="gutter-sizer"></div>
+        <div class="grid-item grid-item--height3">
+            <p>1测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+            <p>测试自己撑开高度</p>
+
+
+        </div>
+        <div class="grid-item grid-item--height1">4</div>
+        <div class="grid-item grid-item--height2">5</div>
+        <div class="grid-item grid-item--height3">6</div>
+        <div class="grid-item grid-item--height2">7</div>
+
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/masonry/4.2.1/masonry.pkgd.min.js"></script>
+    <script>
+        //初始化
+        $('.grid').masonry({
+            columnWidth: '.grid-sizer',
+            gutter: '.gutter-sizer', //不能写成4%，只能通过样式引入
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            horizontalOrder: true
+        });
+
+        function add1() {
+            var el = $('<div class="grid-item grid-item--height1">a</div>');
+            $(".grid").append(el); //动态添加元素
+            $('.grid').masonry('appended', el, true); //appended是添加完成后重新计算
+        }
+
+        function add2() {
+            var el = $('<div class="grid-item grid-item--height2">b</div>');
+            $(".grid").append(el);
+            $('.grid').masonry('appended', el, true);
+        }
+
+        function add3() {
+            var el = $('<div class="grid-item grid-item--height3">c</div>');
+            $(".grid").append(el);
+            $('.grid').masonry('appended', el, true);
+        }
+    </script>
+</body>
+
+</html>
