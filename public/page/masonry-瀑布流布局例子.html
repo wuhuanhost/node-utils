@@ -64,11 +64,23 @@
         .grid-item--height4 {
             height: 90px;
         }
+		.header{
+			width:100%;
+			height:24px;
+			position:fixed;
+			bottom:0;
+			z-index:999;
+			text-align:center;
+		}
     </style>
 </head>
 
 <body>
-
+<div class="header">
+	<button onclick="add1()">添加测试1</button>
+	<button onclick="add2()">添加测试2</button>
+	<button onclick="add3()">添加测试3</button>
+</div>
     <div class="grid">
         <div class="grid-sizer"></div>
         <div class="gutter-sizer"></div>

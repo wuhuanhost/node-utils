@@ -1,110 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh_CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>目录页面</title>
+
     <style>
-        
-        body {
-            margin: 0;
-            padding: 0;
-        }
 
-        #mask {
-            top: 0;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: none;
-        }
-
-        #div {
-            position: absolute;
-            width: 400px;
-            min-height: 90px;
-            margin-left: 200px;
-            background: #ffffff;
-            border: 10px solid #eeeeee;
-            border-radius: 5px;
-            text-align: center;
-            display: none;
-        }
-
-        #div p:last-child {
-            display: none;
-        }
-
-        #div p:last-child button:hover {
-            color:blue;
-            cursor:pointer;
-
-        }
-
-        #title {
-            font-size: 18px;
-        }
     </style>
 </head>
 
 <body>
-    <h1>测试文件下载</h1>
-    <div id="mask"></div>
-    <div id="div">
-        <p id="loading">
-            <img src="./images/loading.gif" width="80px" height="60px">
-        </p>
-        <p id="title">报表正在生成中，请赖心等待.......</p>
-        <p id="downLoadBtn">
-            <button>下载报表</button>
-        </p>
+    <div id="app">
+ 
     </div>
-    <button onclick="exportExcel()">生成报表</button>
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-    <script>
-        /**
-         * 导出文件测试
-         * */
-        function exportExcel() {
-            $("#mask").show();
-            $("#div").show();
-            $.get('http://192.168.1.152:3000/initExcel', function (result) {
-                var downurl = result.downurl;
-                $("#downLoadBtn").attr("data-url", downurl);
-                console.log(result)
-                $("#title").text("报表生成成功，请点击下载！");
-                $("#downLoadBtn").show();
-                $("#loading").hide();
-                $("#loading").attr("visibility", "visible")
-
-            })
-        }
-
-        $("#downLoadBtn").click(function () {
-            var downurl = $(this).attr("data-url");
-            downloadFile(downurl, function () {
-                $("#div").hide();
-                $("#mask").hide();
-            })
-        });
-
-        /**
-         * 通过连接地址下载文件
-         **/
-        function downloadFile(url, cb) {
-            try {
-                var ele = document.createElement("iframe");
-                ele.src = url;
-                ele.style.display = "none";
-                document.body.appendChild(ele);
-            } catch (e) {
-                alert("下载文件出现异常，请稍后重试！！！");
-            }
-            cb();
-        }
     </script>
 </body>
 
