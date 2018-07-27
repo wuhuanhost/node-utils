@@ -28,13 +28,37 @@
             -ms-flex-align: center;
             align-items: center;
         }
+        
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #444!important;
+        }
+        
+        .swiper-slide img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            -ms-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <swiper :options="swiperOption">
-            <swiper-slide v-for="slide in swiperSlides">I'm Slide {{ slide }}</swiper-slide>
+        <swiper :options="swiperOption" v-if='swiperSlides.length>0'>
+            <swiper-slide v-for="slide in swiperSlides">
+                <!-- <img :src="slide"> -->
+                <img :data-src="slide" class="swiper-lazy">
+                <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+            </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
     </div>
@@ -48,21 +72,32 @@
             data: function() {
                 return {
                     swiperOption: {
+                        lazy: true,
                         pagination: {
                             el: '.swiper-pagination'
-                        }
+                        },
+                        autoplay: {
+                            delay: 3000,
+                            stopOnLastSlide: false,
+                            disableOnInteraction: true,
+                        },
+                        loop: true,
+                        observer: true,
+                        observeParents: true,
+
                     },
-                    swiperSlides: [1, 2, 3, 4, 5]
+                    swiperSlides: []
                 }
             },
             created: function() {
                 var _this = this;
-                setInterval(function() {
+                setTimeout(function() {
                     console.log('simulate async data')
-                    if (_this.swiperSlides.length < 10) {
-                        _this.swiperSlides.push(_this.swiperSlides.length + 1)
+                    var arr = ["http://ofjiy8hta.bkt.clouddn.com/banner_1.jpg", "http://ofjiy8hta.bkt.clouddn.com/banner_2.jpg", "http://ofjiy8hta.bkt.clouddn.com/banner_3.jpg"];
+                    for (var i = 0; i < arr.length; i++) {
+                        _this.swiperSlides.push(arr[i]);
                     }
-                }, 3000)
+                }, 300)
             }
         });
 
