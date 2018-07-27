@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/swiper.css">
+    <style>
+        .swiper-container {
+            height: 300px;
+            width: 100%;
+        }
+        
+        .swiper-slide {
+            text-align: center;
+            font-size: 38px;
+            font-weight: 700;
+            background-color: #eee;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <swiper :options="swiperOption">
+            <swiper-slide v-for="slide in swiperSlides">I'm Slide {{ slide }}</swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+    </div>
+    <script src="../javascripts/swiper.js"></script>
+    <script src="../javascripts/vue.js"></script>
+    <script src="../javascripts/vue-awesome-swiper.js"></script>
+    <script>
+        Vue.use(VueAwesomeSwiper);
+        var VM = new Vue({
+            el: "#app",
+            data: function() {
+                return {
+                    swiperOption: {
+                        pagination: {
+                            el: '.swiper-pagination'
+                        }
+                    },
+                    swiperSlides: [1, 2, 3, 4, 5]
+                }
+            },
+            created: function() {
+                var _this = this;
+                setInterval(function() {
+                    console.log('simulate async data')
+                    if (_this.swiperSlides.length < 10) {
+                        _this.swiperSlides.push(_this.swiperSlides.length + 1)
+                    }
+                }, 3000)
+            }
+        });
+
+
+        /**
+         **抹茶异步获取图片数据
+         **/
+        function mockAsycData() {
+
+
+
+        }
+    </script>
+</body>
+
+</html>
