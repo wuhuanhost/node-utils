@@ -118,7 +118,7 @@
         }
         
         .vertical-tabs-container .tab-boxs-item {
-            flex: 1;
+            width: 33.33%;
             height: 100%;
             padding: 0 0.3rem;
         }
@@ -136,33 +136,73 @@
         .flex {
             display: flex !important;
         }
+        
+        .tabs-preload {
+            position: relative;
+            border: 0;
+        }
+        
+        @keyframes tabs-preload1 {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 80%;
+            }
+        }
+        
+        @keyframes tabs-preload2 {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 80%;
+            }
+        }
+        
+        @keyframes tabs-preload3 {
+            from {
+                width: 0%;
+            }
+            to {
+                width: 80%;
+            }
+        }
+        
+        .tabs-preload:after {
+            content: ' ';
+            position: absolute;
+            top: 0.37rem;
+            left: 10%;
+            height: 0.36rem;
+            width: 80%;
+            background: #53b3ed;
+        }
+        
+        .tp1 {
+            animation: tabs-preload1 .5s infinite;
+        }
+        
+        .tp2 {
+            animation: tabs-preload2 .5s infinite;
+        }
+        
+        .tp3 {
+            animation: tabs-preload3 .5s infinite;
+        }
     </style>
 </head>
 
 <body>
     <div class="vertical-tabs-container">
         <ul class="tabs">
-            <li>小米手机1</li>
-            <li>小米手机2</li>
-            <li>小米手机3</li>
-            <li>小米手机4</li>
-            <li>小米手机5</li>
-            <li>小米手机6</li>
-            <li>小米手机7</li>
-            <li>小米手机8</li>
-            <li>小米手机9</li>
-            <li>小米手机10</li>
-            <li>小米手机11</li>
-            <li>小米手机12</li>
-            <li>小米手机13</li>
-            <li>小米手机14</li>
-            <li>小米手机15</li>
-            <li>小米手机16</li>
-            <li>小米手机17</li>
-            <li>小米手机18</li>
+            <!-- 菜单容器 -->
+            <!-- <li class="active">菜单1</li><li>菜单2</li> -->
+
+            <li class="tabs-preload tp1"></li>
+            <li class="tabs-preload tp2"></li>
+            <li class="tabs-preload tp3"></li>
         </ul>
-
-
         <div class="tab-boxs">
             <div class="tab-boxs-content">
                 <div class="tab-boxs-line">
@@ -229,9 +269,6 @@
     <script src="../javascripts/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            $(".tabs li").eq(0).addClass("active");
-            $(".tab-boxs>div").eq(0).addClass("flex");
-
             $(".tabs li").click(function() {
                 //点击tab的下标，第一个的下表为0
                 var index = $(this).index();
@@ -241,6 +278,103 @@
                 $(".tab-boxs>div").eq(index).addClass("flex").siblings().removeClass("flex");
             });
         });
+
+
+        function getDataNavApi(cb) {
+            setTimeout(function() {
+                var tabs = [{
+                    title: "小米手机1",
+                    id: 1
+                }, {
+                    title: "小米手机2",
+                    id: 2
+                }, {
+                    title: "小米手机3",
+                    id: 3
+                }];
+                cb(null, tabs)
+            }, 1000);
+        }
+
+
+        //获取分类下的品牌
+        function getDatBoxApi(navId, cb) {
+            setTimeout(function() {
+                var boxs = [{
+                    title: "小米",
+                    id: 1,
+                    img: "../img/test.jpg"
+                }, {
+                    title: "小米",
+                    id: 1,
+                    img: "../img/test.jpg"
+                }, {
+                    title: "小米",
+                    id: 1,
+                    img: "../img/test.jpg"
+                }, {
+                    title: "小米",
+                    id: 1,
+                    img: "../img/test.jpg"
+                }];
+                cb(null, boxs)
+            }, 1000);
+        }
+
+
+        //绘制右侧导航菜单
+        function drawTabs(tabsClassName, boxClassName) {
+            getDataNavApi(function(err, tabs) {
+                var tabsHtml = "";
+                var boxsHtml = "";
+                for (var i = 0; i < tabs.length; i++) {
+                    if (i === 0) {
+                        tabsHtml += '<li class="active" onclick="openBox(' + i + ',' + tabs[i].id + ',this)">' + tabs[i].title + '</li>';
+                    } else {
+                        tabsHtml += '<li onclick="openBox(' + i + ',' + tabs[i].id + ',this)">' + tabs[i].title + '</li>';
+                    }
+                    boxsHtml += '<div class="tab-boxs-content" id="box-' + i + '"></div>';
+                }
+                console.log(boxsHtml)
+                $("." + tabsClassName).html(tabsHtml);
+                $("." + boxClassName).html(boxsHtml);
+            });
+        }
+
+
+
+        //绘制导航对应的品牌
+        function drawBox(navId, boxClassId) {
+
+            getDatBoxApi(navId, function(err, boxs) {
+                var html = "";
+                for (var i = 0; i < boxs.length; i++) {
+                    if (i % 3 === 0 && i !== 0) {
+                        html += '</div>';
+                    }
+                    if (i % 3 === 0) {
+                        html += '<div class="tab-boxs-line">';
+                    }
+                    html += '<div class="tab-boxs-item" >\
+                                    <p><img src="' + boxs[i].img + '" alt=""></p>\
+                                    <p>' + boxs[i].title + '</p>\
+                                </div>';
+                }
+                console.log(html)
+                $("#" + boxClassId).addClass("flex");
+                $("#" + boxClassId).html(html);
+
+            });
+        }
+        drawTabs("tabs", "tab-boxs");
+        drawBox(0, "box-0");
+
+        //点击右边nav的方法
+        function openBox(index, navId, dom) {
+            $(".tabs li").removeClass("active");
+            $(dom).addClass("active");
+            drawBox(navId, "box-" + index);
+        }
     </script>
 </body>
 
