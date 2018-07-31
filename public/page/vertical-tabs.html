@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        (function() {
+            var width1 = document.documentElement.clientWidth
+            var width2 = 750
+            if (width1 > 750) {
+                width1 = 460
+            };
+            var zoom = width1 / width2
+            document.querySelector('html').style.fontSize = zoom * 100 + 'px'
+            document.querySelector('html').style.height = '100%'
+            document.querySelector('html').setAttribute('data-dpr', window.devicePixelRatio)
+        })()
+    </script>
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            width: 7.5rem;
+            height: 100%;
+            margin: 0;
+            padding: 0
+        }
+        
+        .vertical-tabs-container {
+            top: 0;
+            left: 0;
+            position: relative;
+            width: 7.5rem;
+            height: 100%;
+        }
+        
+        .vertical-tabs-container ul {
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            -webkit-padding-start: 0px;
+        }
+        
+        .vertical-tabs-container .tabs {
+            width: 1.72rem;
+            height: 100%;
+            overflow-y: auto;
+            list-style-type: none;
+            background: #f2f2f2;
+            -webkit-overflow-scrolling: touch;
+            float: left;
+        }
+        
+        .vertical-tabs-container .tabs li {
+            border-bottom: 1px solid #ffffff;
+            width: 100%;
+            height: 1.1rem;
+            font-size: 0.26rem;
+            text-align: center;
+            line-height: 1.1rem;
+            color: #333333;
+            font-family: "Source Han Sans CN Regelar";
+        }
+        
+        .vertical-tabs-container .tabs .active {
+            color: #53b3ed;
+            font-size: 0.26rem;
+            background: #ffffff;
+            position: relative;
+        }
+        
+        .vertical-tabs-container .tabs .active:after {
+            content: '';
+            width: 0.1rem;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #457fe6;
+        }
+        
+        .vertical-tabs-container .tab-boxs {
+            width: calc(100% - 1.72rem);
+            height: 100%;
+            overflow-y: auto;
+            float: left;
+        }
+        
+        .vertical-tabs-container .tab-boxs>div {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        .vertical-tabs-container .tab-boxs-content {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .vertical-tabs-container .tab-boxs-line {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            /* background: red; */
+        }
+        
+        .vertical-tabs-container .tab-boxs-item {
+            flex: 1;
+            height: 100%;
+            padding: 0 0.3rem;
+        }
+        
+        .vertical-tabs-container .tab-boxs-item img {
+            width: 100%;
+        }
+        
+        .vertical-tabs-container .tab-boxs-item p {
+            font-size: 0.26rem;
+            text-align: center;
+            font-family: "Source Han Sans CN Regelar";
+        }
+        
+        .flex {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vertical-tabs-container">
+        <ul class="tabs">
+            <li>小米手机1</li>
+            <li>小米手机2</li>
+            <li>小米手机3</li>
+            <li>小米手机4</li>
+            <li>小米手机5</li>
+            <li>小米手机6</li>
+            <li>小米手机7</li>
+            <li>小米手机8</li>
+            <li>小米手机9</li>
+            <li>小米手机10</li>
+            <li>小米手机11</li>
+            <li>小米手机12</li>
+            <li>小米手机13</li>
+            <li>小米手机14</li>
+            <li>小米手机15</li>
+            <li>小米手机16</li>
+            <li>小米手机17</li>
+            <li>小米手机18</li>
+        </ul>
+
+
+        <div class="tab-boxs">
+            <div class="tab-boxs-content">
+                <div class="tab-boxs-line">
+                    <div class="tab-boxs-item">
+                        <p><img src="../img/test.jpg" alt=""></p>
+                        <p>小米</p>
+                    </div>
+                    <div class="tab-boxs-item">
+                        <p>
+                            <img src="../img/test.jpg" alt="">
+                        </p>
+                        <p>小米</p>
+                    </div>
+                    <div class="tab-boxs-item">
+                        <p>
+                            <img src="../img/test.jpg" alt="">
+                        </p>
+                        <p>小米</p>
+                    </div>
+                </div>
+                <div class="tab-boxs-line">
+                    <div class="tab-boxs-item">
+                        <p>
+                            <img src="../img/test.jpg" alt="">
+                        </p>
+                        <p>小米</p>
+                    </div>
+                    <div class="tab-boxs-item">
+                        <p>
+                            <img src="../img/test.jpg" alt="">
+                        </p>
+                        <p>小米</p>
+                    </div>
+                    <div class="tab-boxs-item">
+                        <p>
+                            <img src="../img/test.jpg" alt="">
+                        </p>
+                        <p>小米</p>
+                    </div>
+                </div>
+            </div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+            <div>13</div>
+            <div>14</div>
+            <div>15</div>
+            <div>16</div>
+            <div>17</div>
+            <div>18</div>
+        </div>
+
+    </div>
+
+
+    <script src="../javascripts/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".tabs li").eq(0).addClass("active");
+            $(".tab-boxs>div").eq(0).addClass("flex");
+
+            $(".tabs li").click(function() {
+                //点击tab的下标，第一个的下表为0
+                var index = $(this).index();
+                //当前点击的添加样式
+                $(this).addClass("active").siblings().removeClass("active");
+                //点击对应的显示，其余的隐藏
+                $(".tab-boxs>div").eq(index).addClass("flex").siblings().removeClass("flex");
+            });
+        });
+    </script>
+</body>
+
+</html>

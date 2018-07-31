@@ -15,7 +15,6 @@ var mySocketController=require('../src/controller/myScoketController.js');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
 /**
  * Create HTTP server.
  */
@@ -89,4 +88,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.info('Listening on ' + bind);
 }
