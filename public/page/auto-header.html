@@ -122,7 +122,7 @@
         var timer = false;
         mybody.addEventListener('touchmove', function(e) {
             clearTimeout(timer); // 清除未执行的代码，重置回初始化状态
-            $("header").css("position", "static");
+            // $("header").css("position", "static");//滚动的时候不显示，滚动停止后显示
             timer = setTimeout(function() {
                 // e.preventDefault();
 
@@ -155,7 +155,7 @@
                 } else if (Math.abs(Y) > Math.abs(X) && Y < 0) {
 
                     console.log("向上");
-                    $("header").css("position", "fixed");
+                    $("header").css("position", "static");
 
 
                 } else {
