@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>上滑隐藏header下滑显示header</title>
+    <script>
+        (function() {
+            var width1 = document.documentElement.clientWidth
+            var width2 = 750
+            if (width1 > 750) {
+                width1 = 460
+            };
+            var zoom = width1 / width2
+            document.querySelector('html').style.fontSize = zoom * 100 + 'px'
+            document.querySelector('html').style.height = '100%'
+            document.querySelector('html').setAttribute('data-dpr', window.devicePixelRatio)
+        })()
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            width: 7.5rem;
+            height: 100%;
+            background: #ffffff;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            /* -webkit-overflow-scrolling: touch; */
+        }
+        
+        header {
+            width: 7.5rem;
+            height: 1.1rem;
+            background: #0094dd;
+            font-size: 0.36rem;
+            text-align: center;
+            color: #eeeeee;
+            line-height: 1.1rem;
+            z-index: 9999999999999999999999999999999;
+        }
+        
+        .content {
+            width: 100%;
+            background: #eeeeee;
+            line-height: 0.36rem;
+            height: auto;
+            padding: 0.36rem;
+        }
+        
+        .content p {
+            display: block;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            font-size: 0.26rem;
+        }
+        
+        .wrapper {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            上滑隐藏header下滑显示header
+        </header>
+        <div class="content">
+            <p>内容区</p>
+            <p>很多刚入行的朋友可能会遇到的一个问题，也是很多想要入行的朋友所关心的一个问题，就是： 这个行业前景怎么样，我入行的话会出现什么样的问题，遇到题主这样的问题怎么办？遇到瓶颈怎么破？ 关于软件测试行业前景的问题，是很多在行业外观望的同学甚至是刚刚入行的朋友都密切关注的一个问题，毕竟这个问题关系到自己未来的收入，甚至是决定自己的职业发展方向。 那么当真正思考这个大问题的时候，内心是会冒出很多细分的小问题的，比如： 01 现在学习软件测试，将来的发展潜力怎么样呢？ 软件测试行业真正开始兴起的时间，大概是在2008年左右。因为在那之前，使用的最智能的手机还只是诺基亚的那种，那时移动端并不需要专门的软件测试。再后来，智能手机开始普及，社交、游戏、电商等各类网站和APP开始兴起，当时的IT行业里，测试领域和开发领域以及产品领域都是空白，再后来赶上互联网浪潮，大大小小的公司都开始重视软件测试了。
+                目前的一个现状是，这个行业大学还没有专门的课程，不像开发。想要进去这个行业无非自学和培训两种途径。发展到2018年初来说，这个行业已经比较稳定，但是并没有饱和，缺口依然很大。产生这样的现象主要是两方面原因： 1.软件测试在未来的5~10年内发展会很快，人才缺口很大，因为软件企业要靠软件产品的质量去占领市场，，不再是以前说的那样“没有测试人员、产品的BUG可能比较多；但是如果没有研发和产品人员这个产品都不可能做出来。”测试人员可谓是一个软件企业生存的命脉，测试这关过不了，产品做出来也是死掉。
+                2.造成人才缺口大的另外一个原因就是很多测试人员的技术水平因为知识不成体系或者学的不够扎实的原因，只能做一下简单的工作，其实企业更多的需要一些技术层级稍微高一点的人才。 那么对于2018年这个行业有一个什么样的趋势呢？ 1.纯功能测试，需求量会越来越低； 2.接口自动化测试，比重会明显增加； 3.性能测试，还是一样，人才稀缺； 4.软件测试人才的需求量会越来越大； 5.企业招人，综合技能要求会越来越高； 6.测试人员的薪资差距会越来越大； 7.自学测试，就业机会越来越少。
+                02 测试是不是比不上开发行业啊？ 以前测试行业不受重视的时候确实之这样。 但是 如果要是单纯的靠薪酬去衡量的话，基本上现在已经达到持平的标准了，而且和开发一样，对于一线城市，像北上广深，薪资始终是最好的。近两年西安的软件测试行业发展很好，那边的同学可以留意一下。 除了简单的薪资对比，还有很多对比反面可能会让你更加青睐于这个行业。比如说： 这个行业不像开发那么累，而且入门比较简单，比较适合女生之类的。总体来说，两者对比，测试入门容易，精进比较难，开发是入门难，精进更难。
+                03会不会很难，学了之后还是不能胜任工作呢？ 首先说，不难，但是要有人带，千万不要盲目自学，即使要自学，也是在有明确而清晰的脉络之后再进行自学，否则就是浪费时间。如果方向错了，每一次努力都是在倒退。 有人问学后能不能胜任工作，也是完全可以的，一般培训机构都是有实际的项目去操作的，其实自学的也最怕的是这个，找不到项目去练手。而且遇到问题会蒙圈。一般来说，一本说，找个有经验的老师，3节课讲完一本书足以，3节课教会一个工具也足以了，最后再结合实际的项目去操作，全部都是按照工作的流程来的，有为何不能胜任工作呢？
+                04 测试是不是只需要写写用例，点点功能页面呢？ 我想说的是，想要让公司给你多开钱，得先让自己值钱。 1.认为软件测试就是写写测试用例，执行一下，汇总一下bug的，趁早清醒，否则只能一辈子点点点。你不主宰你自己，那就让别人主宰你； 2.所有身边一开始认为测试容易，钱好混的，再过几年看他，还是老样子； 3.学无止境，你工作别人也在工作，你发呆别人在学习，然后你就被超越了； 4.工作中不要只有想象力，没有执行力，咱们还没有成长到公司离不开自己的地步； 5.主观能动性，主动去接触技术性的内容，成年人不要指望别人把东西嚼碎了喂你；
+                6.2018年靠点点点去混工资已经越来越难了，持续学习+主动探索+分析总结，缺一不可。 05 测试学几个月就能找到6-9千的工作，这可能吗？ 这已经是一线的初级测试的基本标准了，达不到这个标准就跳，总会找到合适的。 我担心的不是你们入行之后起始拿不到这样的薪酬，而是担心一直处于这个阶段。见过太多的人卡在这个瓶颈期，一去分析，要么是说自己的学历限制、要么是说自己的年龄限制、要么是说自己的技术水平限制。可是这些都是在找一些客观条件，后面我会专门开一篇文章，讲讲身边大神们的逆袭故事。
+                基本上坐上1-2年，薪酬过万是没有问题的，以前的一个朋友，刚去找工作的时候是8.5k，隔了一年，也就是上个月，拿到百度的offer，14k，可以说是很励志了！ 总结一下： 1.这个行业的发展已经比较成熟，但是缺口巨大，具有系统知识技能体系的，会使用一些工具的缺口更大； 2.入门比较容易，相比女孩子稍微比男孩子多一些 3.就业机会多，因为公司产品迭代快，个人技术能力增长也快 4.转行成本不是很大，相比来说，时间和资金相比开发都要少很多。 0 该内容对我有帮助 欢迎给测试窝投稿或参与内容翻译工作，请邮件至editors@testwo.com。也欢迎大家通过新浪微博（@测试窝）或微信公众号（测试窝）关注我们，并与我们的编辑和其他窝友交流。
+                127°|1273 人阅读|0 条评论 发表评论 请 登录 后发表评论
+            </p>
+        </div>
+    </div>
+    <script src="../javascripts/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+
+
+        var mybody = document.getElementsByTagName('body')[0];
+
+
+
+        //滑动处理
+
+        var startX, startY, moveEndX, moveEndY, X, Y;
+
+        mybody.addEventListener('touchstart', function(e) {
+
+            // e.preventDefault();
+
+            startX = e.touches[0].pageX;
+
+            startY = e.touches[0].pageY;
+
+        }, false);
+
+
+        var timer = false;
+        mybody.addEventListener('touchmove', function(e) {
+            clearTimeout(timer); // 清除未执行的代码，重置回初始化状态
+            $("header").css("position", "static");
+            timer = setTimeout(function() {
+                // e.preventDefault();
+
+                moveEndX = e.changedTouches[0].pageX;
+
+                moveEndY = e.changedTouches[0].pageY;
+
+                X = moveEndX - startX;
+
+                Y = moveEndY - startY;
+
+
+
+                if (Math.abs(X) > Math.abs(Y) && X > 0) {
+
+                    console.log("向右");
+
+                } else if (Math.abs(X) > Math.abs(Y) && X < 0) {
+
+                    console.log("向左");
+
+                } else if (Math.abs(Y) > Math.abs(X) && Y > 0) {
+
+                    console.log("向下");
+                    $("header").css("position", "fixed");
+                    $("header").css("top", "0px");
+                    if (parseInt($("body").scrollTop()) === 0) {
+                        $(".content").css("margin-top", "1.1rem");
+                    }
+                } else if (Math.abs(Y) > Math.abs(X) && Y < 0) {
+
+                    console.log("向上");
+                    $("header").css("position", "fixed");
+
+
+                } else {
+
+                    alert("没滑动");
+
+                }
+            }, 100);
+
+
+        });
+    </script>
+</body>
+
+</html>
