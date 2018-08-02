@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../javascripts/rem.js"></script>
+    <title>方正拼音字体测试</title>
+    <link rel="stylesheet" href="../stylesheets/normalize.css">
+    <style>
+        @font-face {
+            font-family: 'fangzheng-pinyin';
+            src: url('../fonts/方正楷体拼音字库.TTf');
+        }
+        
+        p {
+            font-family: 'fangzheng-pinyin';
+            font-size: 0.66rem;
+            line-height: 1.32rem;
+        }
+    </style>
+</head>
+
+<body>
+    <p>测试 使用</p>
+    <p style="color:red;">字体每个字只有一个音，不能分辨多音字和声调</p>
+    <p>相形见绌 xiāng xíng jiàn chù</p>
+    <p>相貌 xiàng mào</p>
+</body>
+
+</html>
