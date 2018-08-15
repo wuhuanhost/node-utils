@@ -95,7 +95,7 @@ function parseHtml(html) {
 };
 
 
-var rege_match_a = /\<a target="_blank" href="(.+?)"\>(.+?)\<\/a\>/gi;
+var rege_match_a = /\<a target="_blank" href="(.+?)"\>(.+?)\<\/a\>/g;
 /**
  * 解析bug详情
  */
@@ -109,12 +109,13 @@ function parseContent(html) {
         var td = $(tr).find("td").html(); //内容
         // console.log(UTFTranslate.ReChange(td))
 
-        if (UTFTranslate.ReChange(td).match(rege_match_a)) { //如果内容是a标签
+        if (UTFTranslate.ReChange(td).replace(/[\r\n]/g, "").match(rege_match_a)) { //如果内容是a标签
             var $a = cheerio.load(UTFTranslate.ReChange(td));
             var ahref = $a("a").attr("href");
             var acontent = $a("a").html();
             content[trim(UTFTranslate.ReChange(th))] = "编号：" + acontent + "\r\n\r\n参考链接：" + ahref;
         } else {
+            // console.log(UTFTranslate.ReChange(td).replace(/[\r\n]/g, ""));
             content[trim(UTFTranslate.ReChange(th))] = trim(UTFTranslate.ReChange(td)).replace(/\<br\>/g, "\r\n");
         }
         // content.push(obj);
@@ -124,13 +125,17 @@ function parseContent(html) {
 
 }
 
-readHtml('C:\\Users\\admin\\Desktop\\新建文件夹\\host\\117.34.70.140.html', function(data) {
+readHtml('C:\\Users\\admin\\Desktop\\漏洞报告\\host\\117.34.70.140.html', function(data) {
 
     // console.log(data);
     parseHtml(data);
 
 });
 
+
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
 //中文转utf-8字符串，中文字符串转utf编码
 var UTFTranslate = {
     Change: function(pValue) {
@@ -144,4 +149,4 @@ var UTFTranslate = {
 
 function trim(str) {
     return str.replace(/\s+/g, "");
-}
+};
