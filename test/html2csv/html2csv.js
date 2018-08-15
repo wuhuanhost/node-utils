@@ -6,7 +6,7 @@ const Json2csvParser = require('json2csv').Parser;
 
 //转换好的csv在wps中打开，然后另存为excel（.xltx）csv不能直接使用excel打开，需要在数据->自文本
 //参考资料：https://www.zhihu.com/question/21869078
-//测试html pwd：61
+//测试html 文件名去前0
 
 /**
  * 读取html
