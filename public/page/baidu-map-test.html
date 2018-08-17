@@ -6,9 +6,6 @@
     <meta name="applicable-device" content="mobile" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>骡码市</title>
-<!--     <link href="frozenui/css/frozen.css" rel="stylesheet" type="text/css" />
-    <link href="css/owl.carousel.css" rel="stylesheet" type="text/css" />
-    <link href="css/login.css" rel="stylesheet" type="text/css" /> -->
     <style type="text/css">
         body,
         html,
@@ -57,51 +54,142 @@
             line-height: 42px;
         }
         
+        .mask {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
         footer {
-            height: calc(100% - 90% - 44px);
+            height: 165px;
+            width: 94%;
+            /* border-top: 1px solid #666666; */
+            position: fixed;
+            background: #ffffff;
+            bottom: 20px;
+            left: 3%;
+            border-radius: 5px;
+            box-shadow: 0 0 6px 2px #eeeeee;
+            padding: 20px 10px;
+            box-sizing: border-box;
+       
+        }
+        
+        footer .content {
             width: 100%;
-            border-top: 1px solid #666666;
+            height: 80px;
+            /* background: red; */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        footer .content .shop_icon {
+            width: 78px;
+            height: 65px;
+            /* background: green; */
+        }
+        
+        footer .content .shop_info1 {
+            flex: 1;
+            height: 65px;
+            /* background: red; */
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* align-items: center; */
+        }
+        
+        footer .content .shop_info1 p:first-child {
+            font-size: 16px;
+        }
+        
+        footer .content .shop_info1 p:last-child {
+            font-size: 10px;
+            margin-top: 4px;
+        }
+        
+        footer .content .shop_info2 {
+            width: 65px;
+            height: 65px;
+            /* background: green; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        footer .content .shop_info2 p:first-child {
+            font-size: 16px;
+            height: 26px;
+        }
+        
+        footer .content .shop_info2 p:last-child {
+            font-size: 10px;
+            height: 24px;
+        }
+        
+        footer button {
+            margin-top: 15px;
+            width: 80%;
+            height: 33px;
+            background: #27a1f4;
+            border-radius: 5px;
+            color: #ffffff;
         }
     </style>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=秘钥"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=miyao"></script>
     <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+    <script src="../javascripts/jquery.min.js"></script>
     <title>设置点的新图标</title>
 </head>
 
 <body>
-
     <div class="mobile" style="height:100%">
-        <!--页面加载 开始-->
-        <!--<div id="preloader">
-            <div id="status">
-              <p class="center-text"><span>拼命加载中···</span></p>
-            </div>
-          </div>-->
-        <!--页面加载 结束-->
-        <!--header 开始-->
         <header>
             <div class="header">
                 <a class="new-a-back" href="javascript:history.back();">
                     <span>
-                        <!-- <img src="images/iconfont-fanhui.png">
-                                            </span> -->
+                        <img src="images/iconfont-fanhui.png">
+                    </span>
                 </a>
                 <div class="ly_header">
                     智慧汽修
                 </div>
             </div>
         </header>
-        <div id="allmap" style="height:90%"></div>
+        <div id="allmap" style="height:100%"></div>
         <footer>
 
+            <div class="content">
+                <div class="shop_icon"><img id="shop-icon" src="./images/ktv.png" style="width:100%;height:100%;border-radius:5px;"></div>
+                <div class="shop_info1">
+                    <p id="shop-name">顺发维修</p>
+                    <p id="shop-address">顺发维修顺发维修顺发维修</p>
+                </div>
+                <div class="shop_info2">
+                    <p id="shop-dist">66m</p>
+                    <p>
+                        <a><img src="./images/phone.png" style="height:100%"></a>
+                    </p>
+                </div>
+            </div>
+
+            <p style="text-align: center;"><button>查 看 优 惠</button></p>
         </footer>
     </div>
 </body>
 
 </html>
+
 <script type="text/javascript">
-    var vConsole = new VConsole();
-    var longitude, latitude, address;
+    // var vConsole = new VConsole();
+    var longitude; //当前的精度
+    var latitude; //当前的维度
+    var address; //当前地址
+    var point; //map point对象 point(longitude,latitude)
+    var map; //全局地图对象
+
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function(r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
@@ -111,6 +199,8 @@
             // alert('您的位置：' + r.point.lng + ',' + r.point.lat);
             longitude = r.point.lng;
             latitude = r.point.lat;
+            console.log(longitude);
+            console.log(latitude);
             init();
         } else {
             alert('failed' + this.getStatus());
@@ -128,8 +218,6 @@
     }, {
         enableHighAccuracy: true
     });
-    var point;
-    var map;
 
     function init() {
         // 百度地图API功能
@@ -180,42 +268,44 @@
         //     icon: myIcon
         // }); // 创建标注
 
-        // 创建控件
-        var myZoomCtrlAdd = new ZoomControlAdd();
-        // 添加到地图当中
-        map.addControl(myZoomCtrlAdd);
+        // 创建自定义放大控件
+        var zoomInControl = new ZoomInControl();
+        map.addControl(zoomInControl);
 
-        var myZoomCtrl = new ZoomControl();
-        map.addControl(myZoomCtrl);
 
+        //创建自定义缩小控件
+        var zoomOutControl = new ZoomOutControl();
+        map.addControl(zoomOutControl);
+
+
+        //创建自定义定位控件
         var myZoomCtrlPosition = new ZoomControlPosition();
         map.addControl(myZoomCtrlPosition);
 
-
+        //批量创建标注物
         createPoint(map, null);
-
 
 
         // alert(computedPointA2Pointb(map, 108.95309828, 34.2777999, longitude, latitude));
 
-    }
+    };
 
 
 
 
     // 定义一个控件类,即function
-    function ZoomControlAdd() {
+    function ZoomInControl() {
         // 默认停靠位置和偏移量
         this.defaultAnchor = BMAP_ANCHOR_BOTTOM_LEFT;
-        this.defaultOffset = new BMap.Size(10, 40);
-    }
+        this.defaultOffset = new BMap.Size(10, 110);
+    };
 
     // 通过JavaScript的prototype属性继承于BMap.Control
-    ZoomControlAdd.prototype = new BMap.Control();
+    ZoomInControl.prototype = new BMap.Control();
 
     // 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
     // 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
-    ZoomControlAdd.prototype.initialize = function(map) {
+    ZoomInControl.prototype.initialize = function(map) {
         // 创建一个DOM元素
         var div = document.createElement("div");
         // 添加文字说明
@@ -232,23 +322,23 @@
         map.getContainer().appendChild(div);
         // 将DOM元素返回
         return div;
-    }
+    };
 
 
 
     // 定义一个控件类,即function
-    function ZoomControl() {
+    function ZoomOutControl() {
         // 默认停靠位置和偏移量
         this.defaultAnchor = BMAP_ANCHOR_BOTTOM_LEFT;
-        this.defaultOffset = new BMap.Size(10, 70);
-    }
+        this.defaultOffset = new BMap.Size(10, 290);
+    };
 
     // 通过JavaScript的prototype属性继承于BMap.Control
-    ZoomControl.prototype = new BMap.Control();
+    ZoomOutControl.prototype = new BMap.Control();
 
     // 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
     // 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
-    ZoomControl.prototype.initialize = function(map) {
+    ZoomOutControl.prototype.initialize = function(map) {
         // 创建一个DOM元素
         var div = document.createElement("div");
         // 添加文字说明
@@ -265,16 +355,16 @@
         map.getContainer().appendChild(div);
         // 将DOM元素返回
         return div;
-    }
+    };
 
 
 
-    // 定义一个控件类,即function
+    // 定义一个控件类
     function ZoomControlPosition() {
         // 默认停靠位置和偏移量
         this.defaultAnchor = BMAP_ANCHOR_BOTTOM_LEFT;
-        this.defaultOffset = new BMap.Size(10, 90);
-    }
+        this.defaultOffset = new BMap.Size(10, 180);
+    };
 
     // 通过JavaScript的prototype属性继承于BMap.Control
     ZoomControlPosition.prototype = new BMap.Control();
@@ -302,56 +392,108 @@
         return div;
     }
 
-
+    var qixiuData; //汽修厂列表
     //创建汽修厂地图浮动点
     function createPoint(map, cb) {
         getShopList(function(data) {
-            var markers = [];
+            qixiuData = data;
+            var currentShop = data[0]; //距离我最近的汽修店
+            var currentDist = 1000;
             for (var i = 0; i < data.length; i++) {
-                var pt = new BMap.Point(data[i].point1, data[i].point2);
-                var myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300, 157));
+                var pt = new BMap.Point(data[i].orglongitude, data[i].orglatitude);
+                var myIcon = new BMap.Icon(data[i].icon, new BMap.Size(300, 157));
                 var marker = new BMap.Marker(pt, {
                     icon: myIcon
                 });
                 marker.addEventListener("click", myclick);
                 map.addOverlay(marker); // 将标注添加到地图中
-                // markers.push(marker);
+
+                //计算每个点距离我的坐标的距离
+                var dist = computedPointA2Pointb(data[i].orglongitude, data[i].orglatitude, longitude, latitude);
+                if (parseFloat(dist) < currentDist) {
+                    currentDist = parseFloat(dist);
+                    currentShop = data[i];
+                }
             }
+            drawQiXiuInfo(currentShop.orglongitude, currentShop.orglatitude);
         });
-    }
+    };
 
-
+    //汽修厂图标点击事件
     function myclick(e) {
-        console.log(e.target.point)
-    }
+        var lng = e.target.point.lng;
+        var lat = e.target.point.lat;
+        drawQiXiuInfo(lng, lat);
+    };
+
+
+
+    //点击汽修厂图标的时候绘制汽修厂的信息
+    function drawQiXiuInfo(lng, lat) {
+        for (var i = 0; i < qixiuData.length; i++) {
+            console.log(qixiuData[i].orglongitude + "       |     " + lng + " |  " + qixiuData[i].orglatitude + "    |  " + lat)
+            if (parseFloat(qixiuData[i].orglongitude) === parseFloat(lng) && parseFloat(qixiuData[i].orglatitude) === parseFloat(lat)) {
+                console.log(qixiuData[i]);
+                $("#shop-icon").attr("src", qixiuData[i].qrdisimg);
+                $("#shop-name").text(qixiuData[i].orgname);
+                $("#shop-address").text(qixiuData[i].address);
+                // alert(computedPointA2Pointb(lng, lat, longitude, latitude))
+                $("#shop-dist").text(computedPointA2Pointb(lng, lat, longitude, latitude));
+                return;
+            }
+        }
+    };
+
+
 
     //计算两地之间的距离
-    function computedPointA2Pointb(map, a1, a2, b1, b2) {
+    function computedPointA2Pointb(a1, a2, b1, b2) {
         // var map = new BMap.Map("allmap");
         // map.centerAndZoom("西安", 15); //初始化地图,设置城市和地图级别。
         var pointA = new BMap.Point(a1, a2); // 
         var pointB = new BMap.Point(b1, b2); // 
         console.log(map.getDistance(pointA, pointB).toFixed(2));
-        return map.getDistance(pointA, pointB).toFixed(2);
-    }
-
-
+        var pointAPointB = map.getDistance(pointA, pointB).toFixed(2);
+        if (parseInt(pointAPointB) < 1000) {
+            return pointAPointB + "m"
+        } else {
+            return parseFloat(pointAPointB / 1000.0).toFixed(2) + "km";
+        }
+    };
 
     //获取汽修厂列表
     function getShopList(cb) {
         var data = [{
-            shop_name: "汽修厂1",
-            phone: "13892656356",
-            icon: "./images/ViewGallery.png",
-            point1: "108.95309828", //精度
-            point2: "34.2777999", //维度
+            orgnum: 123,
+            orgname: "汽修厂1",
+            address: "商家地址",
+            orgtel: "13892656356",
+            remark: "",
+            qrdisimg: "./images/ViewGallery.png",
+            icon: "http://lbsyun.baidu.com/jsdemo/img/fox.gif",
+            orglongitude: "108.95309828", //精度
+            orglatitude: "34.2777999", //维度
         }, {
-            shop_name: "汽修厂2",
-            phone: "13892656356",
-            icon: "./images/ViewGallery.png",
-            point1: "108.85309828", //精度
-            point2: "34.1777999", //维度
+            orgnum: 123,
+            orgname: "汽修厂2",
+            address: "商家地址",
+            orgtel: "13892656356",
+            remark: "",
+            qrdisimg: "./images/ViewGallery.png",
+            icon: "http://lbsyun.baidu.com/jsdemo/img/fox.gif",
+            orglongitude: "108.85309828", //精度
+            orglatitude: "34.1777999", //维度
+        }, {
+            orgnum: 123,
+            orgname: "汽修厂3",
+            address: "商家地址",
+            orgtel: "13892656356",
+            remark: "",
+            qrdisimg: "./images/ViewGallery.png",
+            icon: "http://lbsyun.baidu.com/jsdemo/img/fox.gif",
+            orglongitude: "108.89267984485", //精度
+            orglatitude: "34.221250751972", //维度
         }];
         cb(data);
-    }
+    };
 </script>

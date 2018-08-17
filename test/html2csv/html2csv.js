@@ -40,8 +40,6 @@ function parseHtml(html) {
             title = $(element).find("span").html();
             leve = $(element).find("span").attr("class");
         } else if ($(element).attr("class") === "solution") {
-
-
             var leveRemark = "";
             if (leve === "level_danger_high") {
                 leveRemark = "高危险";
@@ -50,7 +48,6 @@ function parseHtml(html) {
             } else if (leve === "level_danger_low") {
                 leveRemark = "低风险";
             }
-
 
             var obj = {
                 "漏洞标题": UTFTranslate.ReChange(title),
@@ -125,6 +122,8 @@ function parseContent(html) {
 
 }
 
+
+//渲染开始
 readHtml('C:\\Users\\admin\\Desktop\\漏洞报告\\host\\117.34.70.140.html', function(data) {
 
     // console.log(data);
@@ -136,6 +135,7 @@ readHtml('C:\\Users\\admin\\Desktop\\漏洞报告\\host\\117.34.70.140.html', fu
 /**************************************************************************************/
 /**************************************************************************************/
 /**************************************************************************************/
+
 //中文转utf-8字符串，中文字符串转utf编码
 var UTFTranslate = {
     Change: function(pValue) {
@@ -145,7 +145,6 @@ var UTFTranslate = {
         return unescape(pValue.replace(/&#x/g, '%u').replace(/\\u/g, '%u').replace(/;/g, ''));
     }
 };
-
 
 function trim(str) {
     return str.replace(/\s+/g, "");
