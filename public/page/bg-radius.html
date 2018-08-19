@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 
+        参考资料：
+        https://www.cnblogs.com/luozhihao/p/4785076.html
+        https://www.cnblogs.com/Liu30/p/7461560.html
+        https://www.cnblogs.com/frostbelt/p/3819891.html
+        https://blog.csdn.net/qq_17505335/article/details/73289864
+        */
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .wrap {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        
+        .wrap .content {
+            width: 80%;
+            height: 80%;
+            background: #eeeeee;
+            margin: 10% auto;
+            border-radius: 20px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            position: relative;
+            /* 这句话会导致.banner容器radius失效，变成直角 */
+            -webkit-overflow-scrolling: touch;
+            /* 解决方法，使用遮罩 */
+            -webkit-mask: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 0, 0, 1)), to(rgba(255, 0, 0, 1)));
+        }
+        
+        .wrap .content p {
+            padding: 10px;
+        }
+        
+        .wrap .content .banner {
+            width: 100%;
+            height: 160px;
+            background: blue;
+            background-image: url('../img/test.jpg');
+            background-size: 100% 100%;
+            background-position: center center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="content">
+            <div class="banner">
+
+            </div>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+            <p>测试</p>
+        </div>
+
+    </div>
+</body>
+
+</html>
