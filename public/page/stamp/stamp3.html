@@ -11,7 +11,7 @@
             box-sizing: border-box;
         }
         
-        .order-item {
+               .order-item {
             width: 100%;
             height: 120px;
             position: relative;
@@ -32,6 +32,8 @@
             border-right: 1px solid #cccccc;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
+            display: flex;
+            flex-direction: row;
         }
         
         .order-item .bottom {
@@ -43,6 +45,8 @@
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
+            text-align: center;
+            line-height: 30px;
         }
         
         .order-item:before {
@@ -70,17 +74,51 @@
             right: -5px;
             top: 83px;
         }
+        
+        .order-item .left {
+            width: 115px;
+            height: 88px;
+            border-right: 1px dashed #cccccc;
+            text-align: center;
+            padding-top: 10px;
+        }
+        
+        .order-item .left h2 {
+            font-size: 30px;
+            line-height: 40px;            
+			margin: 0;
+            padding: 0;
+        }
+
+        p{
+			margin:0;
+			padding:0;
+		}
+        .order-item .right {
+            padding: 12px 15px 0 15px;
+            flex: 1;
+            height: 88px;
+            line-height: 30px;
+            /* background: red; */
+        }
     </style>
 </head>
 
 <body>
-    <div class="order-item order-item-1">
+                <div class="order-item order-item-1">
 
-        <div class="top"></div>
-        <div class="bottom"></div>
-    </div>
-
-    </div>
+                    <div class="top">
+                        <div class="left">
+                            <h2><span style='font-size:10px;'>¥</span>500元</h2>
+                            <p>456454564</p>
+                        </div>
+                        <div class="right">
+                            <p>测试</p>
+                            <p>测试</p>
+                        </div>
+                    </div>
+                    <div class="bottom">测试测试</div>
+                </div>
 </body>
 
 </html>
