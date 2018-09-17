@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <title>七牛云存储demo</title>
+    <style>
+        body {
+            background-color: rgb(249, 249, 249);
+        }
+        
+        .navbar {
+            background-color: #fff;
+        }
+        
+        .mainContainer {
+            position: relative;
+            top: 52px;
+        }
+        
+        .mainContainer {
+            width: 1170px;
+            margin: 0 auto;
+            padding: 15px 15px;
+        }
+        
+        .mainContainer .row .tip li {
+            list-style: none;
+        }
+        
+        .mainContainer .nav-box ul li a {
+            color: #777;
+        }
+        
+        #box,
+        #box2 {
+            margin-top: 20px;
+            height: 46px;
+        }
+        
+        .fragment-group {
+            overflow: hidden;
+            padding-left: 0;
+        }
+        
+        .hide {
+            visibility: hidden;
+        }
+        
+        .fragment-group .fragment {
+            float: left;
+            width: 30%;
+            padding-right: 10px;
+            list-style: none;
+            margin-top: 10px;
+        }
+        
+        .file-input {
+            display: inline-block;
+            box-sizing: border-box;
+            width: 130px;
+            height: 46px;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .mainContainer .select-button {
+            position: absolute;
+            background-color: #00b7ee;
+            color: #fff;
+            font-size: 18px;
+            padding: 0 30px;
+            line-height: 44px;
+            font-weight: 100;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .speed {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">七牛云存储 - JavaScript SDK</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#">上传示例</a>
+                    </li>
+                    <li>
+                        <a href="http://developer.qiniu.com/code/v6/sdk/javascript.html">SDK 文档</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="mainContainer">
+        <div class="row" style="margin-top: 20px;">
+            <ul class="tip col-md-12 text-mute">
+                <li>
+                    <small>
+                        JavaScript SDK 基于 h5 file api 开发，可以上传文件至七牛云存储。
+                    </small>
+                </li>
+            </ul>
+        </div>
+        <div id="box">
+            <button class="select-button">选择文件</button>
+            <input class="file-input" type="file" id="select" />
+        </div>
+        <div style='overflow:hidden'>
+            <div id='totalBar' style='width:60%;margin-top:50px;'>
+                <p class='speed'></p>
+            </div>
+        </div>
+    </div>
+    <script src="../../javascripts/jquery.min.js"></script>
+    <script src="https://unpkg.com/qiniu-js@2.5.1/dist/qiniu.min.js"></script>
+    <script>
+        var url = "http://127.0.0.1:3000/qiniu/qiniu-upload-token"
+        var domain = ""; //空间访问域名
+
+        $.ajax({
+            url: url,
+            success: (res) => initFileInput(res)
+        })
+
+        let initFileInput = (res) => {
+
+            let token = res.token;
+            //alert(token)
+
+            let config = {
+                useCdnDomain: true,
+                region: qiniu.region.z2
+                    // qiniu.region.z0: 代表华东区域
+                    // qiniu.region.z1: 代表华北区域
+                    // qiniu.region.z2: 代表华南区域
+                    // qiniu.region.na0: 代表北美区域
+                    // qiniu.region.as0: 代表东南亚区域
+
+            };
+            let putExtra = {
+                fname: "",
+                params: {},
+                mimeType: null
+            };
+
+
+            $("#select").change(function() {
+
+                let file = this.files[0];
+                let key = file.name;
+                // 添加上传dom面板
+                let next = (response) => {
+                    let total = response.total;
+                    $(".speed").text("进度：" + total.percent + "% ");
+                }
+
+
+                let subscription;
+                // 调用sdk上传接口获得相应的observable，控制上传和暂停
+                let observable = qiniu.upload(file, key, token, putExtra, config);
+                observable.subscribe(observer)
+            })
+        }
+
+        var observer = {
+            next(res) {
+                console.log(res)
+            },
+            error(err) {
+                console.log(err)
+            },
+            complete(res) {
+                console.log(res)
+                    //图片访问路径
+                console.log(domain + "/" + res.key)
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -19,6 +19,7 @@
     "jade": "~1.11.0",
     "json2csv": "^4.2.1",
     "morgan": "~1.9.0",
+    "qiniu": "^7.2.1",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.1.0",
     "socket.io-emitter": "^3.1.1",
