@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>快递信息展示插件</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .express-container {
+            width: 375px;
+            height: 100%;
+            margin: 0 auto;
+            /* background-color: #eee; */
+            position: relative;
+            font-size: 12px;
+        }
+
+
+        .express-container .vertical-line {
+            width: 2px;
+            background: #ddd;
+            position: absolute;
+            height: 20px;
+            left: 130px;
+            z-index: -1;
+
+        }
+
+        .express-container ul {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .express-container li {
+            width: 100%;
+            min-height: 40px;
+            /* background: red; */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            /* position: relative; */
+        }
+
+
+        .express-container li div:first-child {
+            width: 100px;
+            /* background: blue; */
+
+        }
+
+        .express-container .flag {
+            width: 24px;
+            height: 24px;
+            /* background-color: #eee; */
+            display: table-cell;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        .express-container .flag:before {
+            /* content: "✈"; */
+            content: "";
+            text-align: center;
+            color: #aaa;
+            position: absolute;
+            border-radius: 100%;
+            width: 70%;
+            top: 15%;
+            left: 15%;
+            height: 70%;
+            background-color: #ddd;
+            z-index: 3;
+        }
+
+        /**最新记录flag显示的样子**/
+        .express-container .new .flag:before {
+            content: "";
+            background-color: #fc3737;
+            width: 40%;
+            top: 30%;
+            left: 30%;
+            height: 40%;
+        }
+
+        .express-container .new .flag:after {
+            content: "";
+            position: absolute;
+            border-radius: 100%;
+            width: calc(100% - 6px);
+            top: 0;
+            left: 0;
+            height: calc(100% - 6px);
+            background-color: #eee;
+            border: 3px solid #fc3737;
+            z-index: 2;
+
+        }
+
+        /**用户签收之后flag显示的样子**/
+        .express-container .success .flag:before {
+            content: "";
+            background-color: #0bc675;
+            width: 40%;
+            top: 30%;
+            left: 30%;
+            height: 40%;
+            /* display: none; */
+        }
+
+        .express-container .success .flag:after {
+            /* content: "✔"; */
+            content: "";
+            position: absolute;
+            text-align: center;
+            border-radius: 100%;
+            width: calc(100% - 6px);
+            top: 0;
+            left: 0;
+            height: calc(100% - 6px);
+            background-color: #eee;
+            color: #eee;
+            border: 3px solid #0bc675;
+            /* background-color: #0bc675; */
+            font-size: 14px;
+            z-index: 2;
+        }
+
+        .express-container li div:last-child {
+            flex: 1;
+            /* background: pink; */
+            padding: 10px;
+        }
+
+        .express-container .new .progress {
+            color: #fc3737;
+            font-size: 16px;
+        }
+
+        .express-container .success .progress {
+            color: #0bc675;
+        }
+
+        .express-container .progress {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .express-container .remark {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .express-container .time {
+            color: #565656;
+            font-size: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="express-container">
+        <div class="vertical-line"></div>
+        <ul>
+            <li class="success">
+                <div class="time">2018-10-25 12:12:12</div>
+                <div id="startPoint" class="flag"></div>
+                <div>
+                    <p class="progress">快递已签收！</p>
+                    <p class="remark">签收人：18591881753
+                    </p>
+                </div>
+            </li>
+            <li class="new">
+                <div class="time">2018-10-25 12:12:12</div>
+                <div class="flag"></div>
+                <div>
+                    <p class="progress">快递小哥已接单，请等待</p>
+                    <p class="remark">小哥电话：18612123233,预约上门时间：2018-01-02 10:00</p>
+                </div>
+            </li>
+            <li>
+                <div class="time">2018-10-25 12:12:12</div>
+                <div class="flag"></div>
+                <div>
+                    <p class="progress">快递小哥已接单，请等待</p>
+                    <p class="remark">小哥电话：18612123233,预约上门时间：2018-01-02 10:00</p>
+                </div>
+            </li>
+            <li>
+                <div class="time">2018-10-25 12:12:12</div>
+                <div class="flag"></div>
+                <div>
+                    <p class="progress">快递小哥已接单，请等待</p>
+                    <p class="remark">小哥电话：18612123233,预约上门时间：2018-01-02 10:00</p>
+                </div>
+            </li>
+            <li>
+                <div class="time">2018-10-25 12:12:12</div>
+                <div class="flag"></div>
+                <div>
+                    <p class="progress">快递小哥已接单，请等待</p>
+                    <p class="remark">小哥电话：18612123233,预约上门时间：2018-01-02 10:00</p>
+                </div>
+            </li>
+            <li>
+                <div class="time">2018-10-25 12:12:12</div>
+                <div id="endPoint" class="flag"></div>
+                <div>
+                    <p class="progress">快递小哥已接单，请等待</p>
+                    <p class="remark">小哥电话：18612123233,预约上门时间：2018-01-02 10:00</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        var y1 = $("#endPoint").position().top;
+        var y2 = $("#startPoint").position().top;
+        console.log(y2 + "  " + y1)
+        console.log(parseFloat(y1) - parseFloat(y2))
+        $(".vertical-line").css({
+            top: y2 + 10 + "px",
+            height: y1 - y2 + "px",
+            left: "131px"
+        });
+    </script>
+</body>
+
+</html>
