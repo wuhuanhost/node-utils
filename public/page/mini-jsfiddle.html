@@ -6,14 +6,16 @@
 <style>
 body,textarea,iframe{ margin:0; box-sizing:border-box; }
 textarea,iframe { width:100%; height:50vh; float:left; }
-textarea { color:#eee; background:#111; font-family:monospace; font-size:11pt; line-height:1.4; width:33.33%; }
+textarea { color:#eee; background:#111; font-family:monospace; font-size:11pt; line-height:1.4; width:33.33%;resize: none;}
 #shareBtn { position:absolute; bottom:0; left:0; }
 </style>
 </head>
 <body>
 <iframe id="previewBox"></iframe>
-<textarea id="htmlBox" placeholder="HTML"></textarea>
-<textarea id="cssBox" placeholder="CSS"></textarea>
+<textarea id="htmlBox" placeholder="HTML"><div>123</div></textarea>
+<textarea id="cssBox" placeholder="CSS">div{
+  color:red
+}</textarea>
 <textarea id="jsBox" placeholder="JS"></textarea>
 <button id="shareBtn" type="button">share</button>
 <script>
@@ -37,6 +39,18 @@ function showLink(type){
 shareBtn.onclick = showLink;
 document.body.oninput = renderPreview;
 loadData();
+
 </script>
+
+
+<script>
+renderPreview();
+//可配合https://codemirror.net/demo/theme.html#hopscotch编辑器插件实现博客demo的演示
+
+</script>
+
+
+
+
 </body>
 </html>
