@@ -75,25 +75,23 @@
             border-radius: 3px;
             box-shadow: 0 0 3px #ddd;
 
-
             /* transform: perspective(1000px) rotateX(45deg) rotateY(0deg) rotateZ(0deg); */
             /* transform-origin: center center 0px;
-            animation: mymove 2s; */
+            animation: myanimate 2s; */
 
         }
 
-        .express-container li:first-child div:last-child {
-            transform-origin: center center 0px;
-            animation: mymove 2s;
-        }
 
+
+        /**js添加动画样式**/
         .flag-animate {
             transform-origin: center center 0px;
-            animation: mymove 2s;
+            transform: perspective(750px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            animation: myanimate 1s;
         }
 
 
-        @keyframes mymove {
+        @keyframes myanimate {
             from {
                 transform: perspective(750px) rotateX(90deg) rotateY(0deg) rotateZ(0deg);
                 opacity: 0.1;
@@ -113,6 +111,7 @@
             display: table-cell;
             vertical-align: middle;
             position: relative;
+            z-index: 1;
         }
 
         .express-container .flag:before {
@@ -302,7 +301,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script>
-
+        var lilist = $("li");
+        $("li").css("opacity", 0);
 
         /**
          * 计算垂直竖线的位置 
@@ -330,7 +330,6 @@
 
 
 
-        var lilist = $("li");
 
         // for (var i = 1; i <= $("li").length; i++) {
         //     (function (i) {
@@ -344,7 +343,7 @@
 
         //列表显示动画
         function liAnimate() {
-            $("li").css("opacity", 0);
+
 
             var lilist = $("li");
 
@@ -356,7 +355,8 @@
                         // console.log($("li").eq(i).find(".flag").html())
 
                         $("li").eq(i + 1).find(".flag").attr("id", "endPoint");
-                        $("li").eq(i + 1).find("div:last").addClass("flag-animate");
+                        //为div添加动画效果
+                        $("li").eq(i).find("div:last").addClass("flag-animate");
                         if (i < lilist.length - 1) {
                             // $("li").eq(i - 1).find(".flag").attr("id", "endPoint");
                             computedVercicalLinePosition();
