@@ -43,6 +43,8 @@
         .express-container ul {
             list-style: none;
             padding: 20px;
+
+
         }
 
         .express-container li {
@@ -72,7 +74,27 @@
             margin-left: 10px;
             border-radius: 3px;
             box-shadow: 0 0 3px #ddd;
+
+
+            /* transform: perspective(1000px) rotateX(45deg) rotateY(0deg) rotateZ(0deg); */
+            transform-origin: center center 0px;
+            animation: mymove 2s;
+
         }
+
+
+        @keyframes mymove {
+            from {
+                transform: perspective(750px) rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+                opacity: 0.1;
+            }
+
+            to {
+                transform: perspective(750px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                opacity: 1;
+            }
+        }
+
 
         .express-container .flag {
             width: 24px;
@@ -276,12 +298,13 @@
          * 计算垂直竖线的位置 
          * **/
         function computedVercicalLinePosition() {
+            console.log($(".express-container #endPoint").position())
             var y1 = $(".express-container #endPoint").position().top;
             var y2 = $(".express-container #startPoint").position().top;
             var left = $(".express-container #startPoint").position().left;
             var w = $(".express-container #startPoint").width();
             var wvl = $(".express-container .vertical-line").width();
-            // console.log(y2 + "  " + y1)
+            console.log(y2 + "  " + y1)
             // console.log(parseFloat(y1) - parseFloat(y2))
             $(".express-container .vertical-line").css({
                 top: y2 + 10 + "px",
@@ -296,6 +319,48 @@
 
 
 
+
+        var lilist = $("li");
+
+        // for (var i = 1; i <= $("li").length; i++) {
+        //     (function (i) {
+        //         setTimeout(function () {
+        //             $("li").eq(i).show();
+        //         }, 1000 * i);
+        //     })(i);
+        // }
+
+
+
+        //列表显示动画
+        function liAnimate() {
+            $("li").css("opacity", 0);
+
+            var lilist = $("li");
+
+            for (var i = 0; i <= lilist.length; i++) {
+                (function (i) {
+                    setTimeout(function () {
+                        $("li").eq(i).css("opacity", 1);
+                        $("li .flag[id!='startPoint']").removeAttr("id");
+                        console.log($("li").eq(i).find(".flag").html())
+
+                        $("li").eq(i + 1).find(".flag").attr("id", "endPoint");
+                        if (i >= lilist.length - 1) {
+                            $("li").eq(i - 1).find(".flag").attr("id", "endPoint");
+
+                        }
+
+
+                        computedVercicalLinePosition();
+
+
+                    }, 90 * i);
+                })(i);
+            }
+
+        };
+        liAnimate();
 
 
     </script>
