@@ -343,17 +343,13 @@
                     setTimeout(function () {
                         $("li").eq(i).css("opacity", 1);
                         $("li .flag[id!='startPoint']").removeAttr("id");
-                        console.log($("li").eq(i).find(".flag").html())
+                        // console.log($("li").eq(i).find(".flag").html())
 
                         $("li").eq(i + 1).find(".flag").attr("id", "endPoint");
-                        if (i >= lilist.length - 1) {
-                            $("li").eq(i - 1).find(".flag").attr("id", "endPoint");
-
+                        if (i < lilist.length - 1) {
+                            // $("li").eq(i - 1).find(".flag").attr("id", "endPoint");
+                            computedVercicalLinePosition();
                         }
-
-
-                        computedVercicalLinePosition();
-
 
                     }, 90 * i);
                 })(i);
