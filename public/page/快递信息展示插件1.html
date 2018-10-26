@@ -77,9 +77,19 @@
 
 
             /* transform: perspective(1000px) rotateX(45deg) rotateY(0deg) rotateZ(0deg); */
+            /* transform-origin: center center 0px;
+            animation: mymove 2s; */
+
+        }
+
+        .express-container li:first-child div:last-child {
             transform-origin: center center 0px;
             animation: mymove 2s;
+        }
 
+        .flag-animate {
+            transform-origin: center center 0px;
+            animation: mymove 2s;
         }
 
 
@@ -346,6 +356,7 @@
                         // console.log($("li").eq(i).find(".flag").html())
 
                         $("li").eq(i + 1).find(".flag").attr("id", "endPoint");
+                        $("li").eq(i + 1).find("div:last").addClass("flag-animate");
                         if (i < lilist.length - 1) {
                             // $("li").eq(i - 1).find(".flag").attr("id", "endPoint");
                             computedVercicalLinePosition();
