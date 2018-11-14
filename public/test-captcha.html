@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+
+<div id="captcha">
+<img src="/captcha">
+<br/>
+输入验证码:<input type="text" id="input">
+<button>校验验证码</button>
+</div>	
+
+
+<script src="./javascripts/jquery.min.js"></script>
+<script>
+//校验验证码
+$("button").click(function(){
+	var input=$("#input").val();
+	$.get("/checkcaptcha",{code:input},function(data){
+		if(!data.success){		
+			alert(data.msg);
+		}else{
+			alert("验证码正确！");
+		}
+	})
+});
+</script>
+</body>
+</html>

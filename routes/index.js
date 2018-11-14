@@ -223,7 +223,39 @@ router.get('/index', function(req, res, next) {
 
 
 
+var svgCaptcha = require('svg-captcha');
+//生成验证码
 
+var codeConfig = {
+    size: 5,// 验证码长度
+    ignoreChars: '0o1i', // 验证码字符中排除 0o1i
+    noise: 5, // 干扰线条的数量
+    height: 44 
+}
+router.get('/captcha', function (req, res) {
+	var captcha = svgCaptcha.create(codeConfig);
+	req.session.captcha = captcha.text;
+	console.log(req.session.captcha)
+	res.type('svg'); // 使用ejs等模板时如果报错 res.type('html')
+	res.status(200).send(captcha.data);
+});
+
+//检验验证码
+router.get('/checkcaptcha', function (req, res) {
+	var captcha=req.session.captcha;
+	console.log("==============================")
+	console.log(req.query.code)
+	console.log(captcha)
+	console.log("==============================")
+	console.log(req.query.code===captcha)
+	if(req.query.code===captcha){
+    	res.json({"success":true})
+	}else{
+		res.json({"success":false,"msg":"验证码有误！"})	
+	}
+	
+
+});
 
 
 module.exports = router;
