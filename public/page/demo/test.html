@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            .header {
+                width: 100%;
+                height: 150px;
+                background: red;
+                background: url("./bg.png") no-repeat;
+                background-size: 100% 100%;
+                /* background-position: center center; */
+            }
+            .content {
+                width: 100%;
+                padding: 20px 10%;
+            }
+            .content .item {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: 40px;
+                background: #fff;
+                margin-top: 20px;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border: 1px solid #ccc;
+            }
+            .content .item .label {
+                width: 100px;
+                text-align: right;
+                line-height: 40px;
+                position: relative;
+                padding-right: 10px;
+                font-size: 16px;
+                color: #585858;
+                font-weight: bold;
+            }
+
+            .content .item .label:after {
+                content: " ";
+                width: 1px;
+                height: 26px;
+                background: rgba(3, 3, 3, 0.1);
+                position: absolute;
+                right: 0px;
+                top: 7px;
+            }
+            .content .item .input {
+                flex: 1;
+            }
+            .content .item .input input {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                text-indent: 1em;
+                background: #fff;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                outline: none;
+                font-size: 16px;
+                /* background: red; */
+            }
+            .content button {
+                margin-top: 36px;
+                width: 100%;
+                height: 45px;
+                border: 0;
+                border-radius: 5px;
+                font-size: 20px;
+                color: #eee;
+                background: #5272c3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header"></div>
+        <div class="content">
+            <div class="item">
+                <div class="label">客户姓名</div>
+                <div class="input"><input type="text" placeholder="输入您的姓名" /></div>
+            </div>
+            <div class="item">
+                <div class="label">已选号码</div>
+                <div class="input"><input type="text" placeholder="输入已选号码" /></div>
+            </div>
+            <div class="item">
+                <div class="label">推荐人号码</div>
+                <div class="input"><input type="number" placeholder="输入推荐人手机号码" /></div>
+            </div>
+            <div style="text-align: center;"><button>提交</button></div>
+        </div>
+    </body>
+</html>
