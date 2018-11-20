@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Document</title>
+        <title>自定义slide 3d切换效果</title>
         <style>
             .swiper-container {
                 width: 600px;
@@ -49,7 +49,6 @@
     <body>
         <div id="app">
             <div class="swiper-container">
-                isPrev
                 <div
                     class="swiper-slide"
                     v-for="(slide,index) in slides"
@@ -57,12 +56,16 @@
                     v-bind:style="{'transform':comparePosition(index)}"
                     ref="slide"
                 >
-                    {{ index }}
+                    {{ slide.title }}
+                    <div v-for="(item,index1) in slide.list">{{ item }}</div>
                 </div>
             </div>
-            <p style="text-align: center;"><button @click="prevBtn()">prev</button> <button @click="nextBtn()">next</button></p>
+            <p style="text-align: center;">
+                <button @click="prevBtn()">上一个</button> <button @click="nextBtn()">下一个</button> <button @click="addSlide()">添加slide</button>
+                <button @click="updateSlideItem()">修改slide中的item</button>
+            </p>
         </div>
-        <script src="https://cdn.bootcss.com/vue/2.5.17/vue.min.js"></script>
+       <script src="https://cdn.bootcss.com/vue/2.5.17/vue.min.js"></script>
         <script>
             var vm = new Vue({
                 el: "#app",
@@ -74,19 +77,19 @@
                     height: 400,
                     slides: [
                         {
-                            title: "1"
+                            title: "1eqeqw"
                         },
                         {
-                            title: "2"
+                            title: "2eqweqw"
                         },
                         {
-                            title: "3"
+                            title: "3qweqw"
                         },
                         {
-                            title: "4"
+                            title: "4qweqe"
                         },
                         {
-                            title: "5"
+                            title: "5qweqw"
                         }
                     ]
                 },
@@ -121,6 +124,18 @@
                         console.log(this.$refs.slide);
                         this.comparePosition(this.activeIndex);
                     },
+                    addSlide: function() {
+                        this.slides.push({
+                            title: "666",
+                            list: ["1", "2", "3"]
+                        });
+                    },
+                    updateSlideItem: function() {
+                        var slide = this.slides[this.slides.length - 1];
+                        slide.list = ["4,5,6"];
+                        this.slides.pop();
+                        this.slides.push(slide);
+                    },
                     comparePosition: function(index) {
                         var left = "";
                         if (index === this.activeIndex) {
@@ -140,3 +155,6 @@
         </script>
     </body>
 </html>
+
+ 
+       
