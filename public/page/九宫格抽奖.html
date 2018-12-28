@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                outline: none;
+            }
+            #rotary-table {
+                width: 340px;
+                height: 349px;
+                position: relative;
+                margin: auto;
+                background-color: antiquewhite;
+            }
+            #rotary-table .award {
+                width: 90px;
+                height: 96px;
+                line-height: 96px;
+                text-align: center;
+                float: left;
+                position: absolute;
+                overflow: hidden;
+                background-color: aquamarine;
+            }
+            #rotary-table .award.active {
+                background-color: darkgoldenrod;
+            }
+            #rotary-table .award.award0 {
+                top: 21px;
+                left: 21px;
+            }
+            #rotary-table .award.award1 {
+                top: 21px;
+                left: 125px;
+            }
+            #rotary-table .award.award2 {
+                top: 21px;
+                right: 22px;
+            }
+            #rotary-table .award.award3 {
+                top: 126px;
+                right: 22px;
+            }
+            #rotary-table .award.award4 {
+                bottom: 22.5px;
+                right: 22px;
+            }
+            #rotary-table .award.award5 {
+                bottom: 22.5px;
+                right: 125.5px;
+            }
+            #rotary-table .award.award6 {
+                bottom: 22.5px;
+                left: 21px;
+            }
+            #rotary-table .award.award7 {
+                top: 126px;
+                left: 21px;
+            }
+            #rotary-table #start-btn {
+                position: absolute;
+                top: 125px;
+                left: 124px;
+                width: 90px;
+                height: 96px;
+                line-height: 90px;
+                text-align: center;
+                background-color: coral;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="rotary-table">
+            <div class="award" v-for="(award,index) in awards" :class="['award'+index,{'active': index==current}]">{{ award.name }}</div>
+            <div id="start-btn" @click="start">开始</div>
+        </div>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+        <script>
+            var Vue = new Vue({
+                el: "#rotary-table",
+                data: function() {
+                    return {
+                        current: 0,
+                        awards: [
+                            { id: 1, name: "空" },
+                            { id: 2, name: "眼镜" },
+                            { id: 3, name: "包" },
+                            { id: 4, name: "笨驴" },
+                            { id: 5, name: "书" },
+                            { id: 6, name: "手链" },
+                            { id: 7, name: "美女" },
+                            { id: 8, name: "iphone" }
+                        ],
+                        speed: 200,
+                        diff: 15,
+                        award: {},
+                        time: 0
+                    };
+                },
+                methods: {
+                    start() {
+                        // 开始抽奖
+                        this.drawAward();
+                        this.time = Date.now();
+                        this.speed = 200;
+                        this.diff = 15;
+                    },
+                    drawAward() {
+                        var _this = this;
+                        // 请求接口, 这里我就模拟请求后的数据(请求时间为2s)
+                        setTimeout(function() {
+                            _this.award = {
+                                id: "1",
+                                name: "笨驴"
+                            };
+                        }, 1000);
+                        _this.move();
+                    },
+                    move() {
+                        var _this = this;
+                        window.timeout = setTimeout(function() {
+                            _this.current++;
+                            if (_this.current > 7) {
+                                _this.current = 0;
+                            }
+                            if (_this.award.id && (Date.now() - _this.time) / 1000 > 2) {
+                                _this.speed += _this.diff;
+                                if ((Date.now() - _this.time) / 1000 > 4 && _this.award.id == _this.awards[_this.current].id) {
+                                    clearTimeout(window.timeout);
+                                    setTimeout(() => {
+                                        alert("恭喜你，抽中了" + _this.award.name);
+                                    }, 0);
+                                    return;
+                                }
+                            } else {
+                                _this.speed -= _this.diff;
+                            }
+                            console.log(_this.speed);
+                            _this.move();
+                        }, _this.speed);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
