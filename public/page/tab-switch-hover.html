@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    .site-nav{width:1000px; margin:20px auto; border-bottom:1px solid #ddd; position:relative;}
+    .site-nav .container{height:32px;}
+    .site-nav a{display:block; width:100px; float:left; text-align:center;padding-bottom:7px; font-size:18px; color:#999;}
+    .site-nav a.current1,.site-nav a:hover{color:#e3000c;}
+    .site-nav .nav-marker{position:absolute; width:40px; height:3px; background:red; bottom:-1px;}
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.js"></script>
+</head>
+<body>
+<div class="site-nav">
+    <div class="container clearfix">
+        <a href="#" class="current1">网站首页</a>
+        <a href="#">关于我们</a>
+        <a href="#">产品中心</a>
+        <a href="#">新闻资讯</a>
+        <a href="#">联系我们</a>
+    </div>
+    <div class="nav-marker"></div>
+</div>
+</body>
+<script>
+//下划线随鼠标移动
+    $(function(){
+        let navMarker = $('.nav-marker');
+        let navCurrent = $('.site-nav a.current1');
+        let halfW = ($('.container a').width()-$('.nav-marker').width())/2;
+        //设置下划线初始位置
+        navMarker.css('left',navCurrent.position().left+halfW);
+        //设置下划线随鼠标平移
+        $('.site-nav a').mouseenter(function(){
+            navMarker.stop().animate({left:$(this).position().left+halfW},300);
+        });
+        //设置鼠标离开时下划线恢复到原来位置
+        // $('.site-nav a').mouseleave(function(){
+        //     navMarker.stop().animate({left:navCurrent.position().left+halfW});
+        // })
+    })
+</script>
+</html>
+
