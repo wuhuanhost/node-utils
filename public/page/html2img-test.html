@@ -5,39 +5,78 @@
         <title>htmltopic</title>
         <script type="text/javascript" src="../javascripts/jquery.min.js"></script>
         <script type="text/javascript" src="../javascripts/html2canvas.min.js"></script>
+        <script src="../javascripts/jquery.qrcode.min.js"></script>
         <style>
-            * {
+            html,
+            body {
+                width: 100%;
+                height: 100%;
                 margin: 0;
+                padding: 0;
+                color: #6a6a6a;
             }
 
             .test {
-                width: 100px;
-                height: 100px;
+                width: 400px;
+                height: 830px;
                 text-align: center;
                 line-height: 100px;
-                background-color: #87ceeb;
-                display: inline-block;
-                vertical-align: top;
+                /* background-color: #87ceeb; */
+                display: block;
+                border: 1px solid #9a9a9a;
+                margin: 20px auto;
+            }
+            h2 {
+                color: red;
+            }
+            .text {
+                text-align: justify;
+                line-height: 30px;
+                padding: 0 10px;
+                margin-bottom: 40px;
+            }
+
+            .span1 {
+                color: brown;
+            }
+
+            .span2 {
+                color: aqua;
             }
 
             canvas {
                 margin-right: 5px;
             }
 
-            .down {
-                float: left;
-                margin: 40px 10px;
+            .action {
+                width: 100%;
+                text-align: center;
             }
-            .down2 {
-                float: left;
-                margin: 40px 30px;
+
+            .action .down {
+                padding: 3px 20px;
+                background: #eee;
+                text-decoration: none;
+                color: blue;
             }
         </style>
     </head>
     <body>
-        <div class="test">测试</div>
-        <div><a class="down" href="" download="downImg">下载</a></div>
+        <div class="test">
+            <h2>测试分享图片的生成</h2>
+            <p class="text">
+                这是一大段文字，测试文字hello world!测试文字Hello World!这是一大段文字，测试文字hello world!测试文字Hello World!这是一大段文字，测试文字hello world!测试文字Hello
+                World!这是一大段文字，测试文字hello world!测试文字Hello World!这是一大段文字，测试文字hello world!测试文字Hello World!
+            </p>
+            <p class="text">
+                这是一大段文字，测试文字<span class="span1">hello world!</span>测试文字<span class="span2">Hello World!</span>这是一大段文字，测试文字hello world!测试文字Hello
+                World!这是一大段文字，测试文字hello world!测试文字Hello World!这是一大段文字，测试文字hello world!测试文字Hello World!这是一大段文字，测试文字hello world!测试文字Hello World!
+            </p>
+            <div id="qrcode"></div>
+        </div>
+        <div class="action"><a class="down" href="" download="downImg">下载</a></div>
         <script>
+            $("#qrcode").qrcode({ width: 200, height: 200, text: "size doesn't matter" });
             //直接选择要截图的dom，就能截图，但是因为canvas的原因，生成的图片模糊
             //html2canvas(document.querySelector('div')).then(function(canvas) {
             //    document.body.appendChild(canvas);
@@ -57,9 +96,16 @@
             //  context.translate(0,0);
             var context = canvas2.getContext("2d");
             context.scale(2, 2);
-            html2canvas(document.querySelector("div"), { canvas: canvas2 }).then(function(canvas) {
+            html2canvas(document.querySelector("div"), {
+                canvas: canvas2,
+                useCORS: true,
+                // dpi: window.devicePixelRatio * 2,
+                dpi: 144,
+                scale: 2
+            }).then(function(canvas) {
                 //document.body.appendChild(canvas);
                 //canvas转换成url，然后利用a标签的download属性，直接下载，绕过上传服务器再下载
+
                 document.querySelector(".down").setAttribute("href", canvas.toDataURL());
             });
         </script>
