@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 var CryptoJS = require("crypto-js");
+const NodeRSA = require("node-rsa");
 /**
  * md5加密
  * @param  {[type]} str [description]
@@ -77,7 +78,6 @@ exports.MD5 = MD5;
  */
 function RSATest() {
     console.log("-----------------------RSA加密解密测试-------------------------------------------");
-    const NodeRSA = require("node-rsa");
 
     pkcsType = "pkcs8"; //不为空则 设置为传入参数，为空则 设置为 pkcs8,常用pkcs8和pkcs1
     console.log("pkcsType=" + pkcsType);
