@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script>
+            (function() {
+                var width1 = document.documentElement.clientWidth;
+                var width2 = 750;
+                if (width1 > 750) {
+                    width1 = 460;
+                }
+                var zoom = width1 / width2;
+                document.querySelector("html").style.fontSize = zoom * 100 + "px";
+                document.querySelector("html").style.height = "100%";
+                document.querySelector("html").setAttribute("data-dpr", window.devicePixelRatio);
+            })();
+        </script>
+        <title>砸金蛋</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                outline: none;
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                background: #eeeeee;
+                -webkit-overflow-scrolling: touch;
+            }
+            [v-cloak] {
+                display: none;
+            }
+
+            #app,
+            #page1,
+            #page2 {
+                width: 7.5rem;
+                height: 100%;
+            }
+
+            #page1 img {
+                width: 100%;
+                height: 100%;
+            }
+            #page2 {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("./img/bg_game.png");
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+            #page2 #eggs {
+                position: absolute;
+                top: 9.3rem;
+                width: 5.1rem;
+                height: 2.2rem;
+                /* background: red; */
+                left: calc((100% - 5.1rem) / 2);
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            #page2 #eggs .egg {
+                width: 1.6rem;
+                height: 100%;
+                background-image: url("./img/icon_egg.png");
+                background-size: 100%;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+            #page2 #smart {
+                /* background-color: red; */
+                position: absolute;
+                top: 7.9rem;
+                width: 1.4rem;
+                height: 1.5rem;
+                right: 2.46rem;
+                background-image: url("./img/icon_smart.png");
+                background-size: 100%;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+            <div id="page1" v-show="showPage===1">
+                <img src="./img/bg_home.jpg" alt="" srcset="" />
+            </div>
+            <div id="page2" v-show="showPage===2">
+                <div id="eggs">
+                    <div class="egg" @click="clickEgg('egg1')" ref="egg1"></div>
+                    <div class="egg" @click="clickEgg('egg2')" ref="egg2"></div>
+                    <div class="egg" @click="clickEgg('egg3')" ref="egg3"></div>
+                </div>
+                <div id="smart" ref="smart"></div>
+            </div>
+        </div>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+
+        <script>
+            var VM = new Vue({
+                el: "#app",
+                data: function() {
+                    return {
+                        loginid: localStorage.getItem("loginid") || "",
+                        typeCode: localStorage.getItem("typeCode") || "",
+                        cjact_id: localStorage.getItem("SXH_CJACTIVE_ID") || "4", //抽奖活动编号
+                        game_id: localStorage.getItem("SXH_CJACTIVE_GAME_ID") || "3", //抽奖游戏编号
+                        cjactive_info: {}, //抽奖信息
+                        cjactive_prize: [], //奖品配置
+                        cjuser: {}, //用户抽奖次数
+                        showPage: 2
+                    };
+                },
+                methods: {
+                    clickEgg: function(ref) {
+                        console.log("=========砸金蛋动画效果开始=========");
+                        console.log(this);
+                        console.log(this.$refs[ref].getBoundingClientRect());
+                        console.log(this.$refs["smart"].getBoundingClientRect());
+                        var x = this.$refs[ref].getBoundingClientRect().left + this.$refs[ref].getBoundingClientRect().width / 2;
+                        var y = this.$refs[ref].getBoundingClientRect().top - 66;
+                        $("#smart").animate({
+                            left: x + "px",
+                            top: y + "px"
+                        });
+                        setTimeout(() => {
+                            // 将锤子的旋转顶点设置为左下角
+                            $("#smart").css("transform-origin", "right bottom");
+                            $("#smart").css("transform", "rotate(-45deg)");
+                        }, 300);
+                        setTimeout(() => {
+                            // 将锤子的旋转顶点设置为左下角
+                            $("#smart").css("transform-origin", "right bottom");
+                            $("#smart").css("transform", "rotate(0deg)");
+                        }, 600);
+                        console.log("=========砸金蛋动画效果结束=========");
+                    }
+                },
+                mounted: function() {
+               
+                }
+            });
+
+           
+        </script>
+    </body>
+</html>
