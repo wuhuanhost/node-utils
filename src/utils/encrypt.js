@@ -57,10 +57,10 @@ function aes256DecodeCBC(data, key, iv) {
 }
 
 // 向量（向量长度为16,24,32对应AES128,AES192,AES256）目前好像只能使用AES128位加密
-const iv = "1234567890000000";
+const iv = "0000000000000000";
 console.log("TCL: iv", iv);
 // 秘钥
-var key = "1234567890000000";
+var key = "11111111111111111111111111111111";
 console.log("TCL: key", key);
 console.log("AES加密解密测试");
 var data = "123456789";
