@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>抽奖</title>
+    <link rel="stylesheet" href="./css/animate.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <section id="app" v-cloak>
+      <header>幸运大抽奖环节</header>
+      <section class="luckdraw-container">
+        <div class="luckdraw-container-left">
+          <div class="luckdraw-title">
+            <span>抽奖</span>
+            <span>{{users.length}}人</span>
+          </div>
+          <div class="luckdraw-animate">
+            <div class="prize-phone-title">
+              {{hideUserPhoneFourNumber(currentUser.phone)}}
+            </div>
+            <div class="start-stop-btn" @click="startOrStop()">
+              {{lotteryBtn}}
+            </div>
+          </div>
+          <div class="luckdraw-menu">
+            <div>
+              选择奖项<select
+                name=""
+                v-model="choicePrize"
+                @change="choicePrizeFun()"
+              >
+                <option v-for="(item,index) in prizeSetting" :value="item"
+                  >{{item.title}}</option
+                >
+              </select>
+            </div>
+            <div style="display:none;">
+              选择人数<select name="">
+                <option value="1">1</option>
+                <option value="2">4</option>
+                <option value="3">10</option>
+              </select>
+            </div>
+            <div>
+              <div class="reset" style="display:none;">重新加载</div>
+            </div>
+          </div>
+        </div>
+        <div class="luckdraw-container-right">
+          <div class="luckdraw-result-list">
+            <div
+              class="luckdraw-result-item animated fadeInLeft"
+              v-for="(item,index) in renderResultList"
+            >
+              <span class="luckdraw-result-index">{{(index+1)}}</span>
+              <span class="luckdraw-result-phone"
+                >{{hideUserPhoneFourNumber(item.phone)}}</span
+              >
+            </div>
+          </div>
+          <div class="luckdraw-result-btn">
+            <div @click="lettoryResultReset()">重新抽奖</div>
+          </div>
+        </div>
+      </section>
+      <footer>本次活动由【西安银创多媒体有限公司】提供技术支持</footer>
+    </section>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/lodash.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>

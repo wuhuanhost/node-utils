@@ -1,0 +1,224 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #151440;
+  background-image: url("../images/bg_001.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+[v-cloak] {
+  display: none !important;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#app header {
+  width: 100%;
+  height: 160px;
+  color: #eeeeee;
+  /* background: pink; */
+  line-height: 160px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: blod;
+}
+
+#app footer {
+  width: 100%;
+  height: 80px;
+  color: #333333;
+  /* background: pink; */
+  line-height: 80px;
+  text-align: center;
+  font-size: 20px;
+}
+
+#app .luckdraw-container {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#app .luckdraw-container .luckdraw-container-left {
+  width: 60%;
+  /* background-color: #95050f; */
+  background-color: rgba(181, 1, 2, 0.8);
+  margin: 0 10px 0 40px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eeeeee;
+}
+
+/* 标题 */
+.luckdraw-container-left .luckdraw-title {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 22px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 20px;
+  color: #eeeeee;
+}
+
+.luckdraw-container-left .luckdraw-title span:first-child {
+  flex: 1;
+  text-align: left;
+}
+
+.luckdraw-container-left .luckdraw-title span:last-child {
+  flex: 1;
+  text-align: right;
+}
+
+/* 动画 */
+.luckdraw-container-left .luckdraw-animate {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.luckdraw-container-left .luckdraw-animate .prize-phone-title {
+  color: #eeeeee;
+  margin-bottom: 20px;
+  font-size: 36px;
+}
+
+.luckdraw-container-left .luckdraw-animate .start-stop-btn {
+  width: 90px;
+  height: 36px;
+  background: #eeeeee;
+  border-radius: 5px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 36px;
+  color: #95050f;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 奖品奖项选择 */
+.luckdraw-container-left .luckdraw-menu {
+  width: 100%;
+  height: 60px;
+  border-top: 1px solid #eeeeee;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+.luckdraw-container-left .luckdraw-menu .reset {
+  width: 90px;
+  height: 36px;
+  background: #eeeeee;
+  border-radius: 5px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 36px;
+  color: #000000;
+}
+.luckdraw-container-left .luckdraw-menu div {
+  flex: 1;
+  text-align: center;
+}
+
+.luckdraw-container-left .luckdraw-menu select {
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+  line-height: 30px;
+  color: rgb(117, 117, 117);
+  cursor: pointer;
+  font-family: 微软雅黑;
+  text-align: center;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  border-radius: 3px;
+  margin-left: 10px;
+  min-width: 60px;
+}
+
+#app .luckdraw-container .luckdraw-container-right {
+  border: 1px solid #eeeeee;
+  width: 40%;
+  /* background-color: #95050f; */
+  background-color: rgba(181, 1, 2, 0.8);
+  margin: 0 40px 0 10px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.luckdraw-container-right .luckdraw-result-list {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.luckdraw-container-right .luckdraw-result-btn {
+  height: 60px;
+  border-top: 1px solid #eeeeee;
+}
+
+.luckdraw-container-right .luckdraw-result-btn div {
+  width: 90px;
+  height: 36px;
+  background: #eeeeee;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 12px;
+  text-align: center;
+  line-height: 36px;
+}
+
+.luckdraw-container-right .luckdraw-result-list .luckdraw-result-item {
+  width: calc(100% - 5px - 5px);
+  height: 60px;
+  background-color: #a52a33;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.luckdraw-result-list .luckdraw-result-item .luckdraw-result-index {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background-color: #eeeeee;
+  border-radius: 18px;
+  text-align: center;
+  line-height: 36px;
+  margin: 0 10px;
+  color: #95050f;
+}
+
+.luckdraw-result-list .luckdraw-result-item .luckdraw-result-phone {
+  font-size: 20px;
+  color: #eeeeee;
+}
