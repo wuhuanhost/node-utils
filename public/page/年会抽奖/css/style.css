@@ -1,3 +1,8 @@
+@font-face {
+  font-family: FZZYJW;
+  src: url("../fonts/FZZYJW.TTF");
+}
+
 * {
   box-sizing: border-box;
 }
@@ -29,18 +34,29 @@ body {
 #app header {
   width: 100%;
   height: 160px;
-  color: #eeeeee;
+  color: #ebb741;
   /* background: pink; */
   line-height: 160px;
   text-align: center;
-  font-size: 40px;
+  font-size: 46px;
   font-weight: blod;
+  position: relative;
+  font-family: FZZYJW;
+}
+
+#app header img {
+  position: absolute;
+  display: inline-block;
+  width: 130px;
+  height: 130px;
+  right: 40px;
+  top: 15px;
 }
 
 #app footer {
   width: 100%;
   height: 80px;
-  color: #333333;
+  color: #ffffff;
   /* background: pink; */
   line-height: 80px;
   text-align: center;
@@ -58,7 +74,8 @@ body {
 #app .luckdraw-container .luckdraw-container-left {
   width: 60%;
   /* background-color: #95050f; */
-  background-color: rgba(181, 1, 2, 0.8);
+  /* background-color: rgba(181, 1, 2, 0.8); */
+  background-color: rgba(255, 255, 255, 0.6);
   margin: 0 10px 0 40px;
   display: flex;
   flex-direction: column;
@@ -76,6 +93,7 @@ body {
   align-items: center;
   padding: 0 20px;
   color: #eeeeee;
+  color: #111111 !important;
 }
 
 .luckdraw-container-left .luckdraw-title span:first-child {
@@ -98,9 +116,9 @@ body {
 }
 
 .luckdraw-container-left .luckdraw-animate .prize-phone-title {
-  color: #eeeeee;
+  color: #111111;
   margin-bottom: 20px;
-  font-size: 36px;
+  font-size: 46px;
 }
 
 .luckdraw-container-left .luckdraw-animate .start-stop-btn {
@@ -125,7 +143,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: #ffffff;
+  color: #111111;
 }
 .luckdraw-container-left .luckdraw-menu .reset {
   width: 90px;
@@ -163,12 +181,24 @@ body {
   border: 1px solid #eeeeee;
   width: 40%;
   /* background-color: #95050f; */
-  background-color: rgba(181, 1, 2, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
   margin: 0 40px 0 10px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
+}
+
+.luckdraw-container-right .luck-result-user {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 22px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 20px;
+  color: #111111;
 }
 
 .luckdraw-container-right .luckdraw-result-list {
@@ -199,7 +229,7 @@ body {
 .luckdraw-container-right .luckdraw-result-list .luckdraw-result-item {
   width: calc(100% - 5px - 5px);
   height: 60px;
-  background-color: #a52a33;
+  background-color: #09225a;
   margin: 5px;
   display: flex;
   flex-direction: row;

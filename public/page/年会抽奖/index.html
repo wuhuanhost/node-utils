@@ -10,12 +10,12 @@
   </head>
   <body>
     <section id="app" v-cloak>
-      <header>幸运大抽奖环节</header>
+      <header>{{title}}<img src="./images/sxh_qrcode.jpg" /></header>
       <section class="luckdraw-container">
         <div class="luckdraw-container-left">
           <div class="luckdraw-title">
-            <span>抽奖</span>
-            <span>{{users.length}}人</span>
+            <span>抽奖区</span>
+            <span style="display:none;">共{{users.length}}人参与抽奖</span>
           </div>
           <div class="luckdraw-animate">
             <div class="prize-phone-title">
@@ -50,6 +50,7 @@
           </div>
         </div>
         <div class="luckdraw-container-right">
+          <div class="luck-result-user">获奖名单</div>
           <div class="luckdraw-result-list">
             <div
               class="luckdraw-result-item animated fadeInLeft"
@@ -66,7 +67,7 @@
           </div>
         </div>
       </section>
-      <footer>本次活动由【西安银创多媒体有限公司】提供技术支持</footer>
+      <footer>{{copyright}}</footer>
     </section>
     <script src="./js/jquery.min.js"></script>
     <script src="./js/lodash.min.js"></script>

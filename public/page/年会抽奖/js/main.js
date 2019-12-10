@@ -3,13 +3,15 @@ var VM = new Vue({
   el: "#app",
   data: function() {
     return {
+      title: "乐享“龙支付”，幸运大抽奖",
+      copyright: "本次活动由【西安银创多媒体有限公司】提供技术支持",
       users: [], //抽奖用户数量
       prizeSetting: [
         {
           id: 1,
           key: "one",
           title: "一等奖",
-          value: 1 //奖品数量
+          value: 2 //奖品数量
         },
         {
           id: 2,
@@ -40,11 +42,24 @@ var VM = new Vue({
     choicePrizeFun: function() {
       console.log(this.choicePrize);
       this.lotteryBtn = "开始抽奖";
+      this.currentUser = {
+        id: 0,
+        phone: ""
+      };
     },
     getUserData: function() {
       var _this = this;
-      $.get("../data/user.json", function(user) {
-        _this.users = user;
+      $.get("./data/user.txt", function(user) {
+        //将txt中的白名单按照回车分割
+        var userArr = user.split(/\n/);
+        var users = [];
+        for (var i = 0; i < userArr.length; i++) {
+          users.push({
+            id: i,
+            phone: userArr[i]
+          });
+        }
+        _this.users = users;
       });
     },
     hideUserPhoneFourNumber: function(phone) {
@@ -55,6 +70,14 @@ var VM = new Vue({
       }
     },
     startOrStop: function(params) {
+      var prizeType = this.choicePrize;
+      var result = localStorage.getItem(prizeType.key);
+      var resultArr = JSON.parse(result) || [];
+      if (resultArr.length >= parseInt(prizeType.value)) {
+        alert("抽奖超限，请点击右侧重新抽奖！");
+        return false;
+      }
+
       if (this.lotteryBtn === "结束抽奖") {
         console.log(this.lotteryBtn);
         clearInterval(timerFlag);
@@ -131,7 +154,7 @@ var VM = new Vue({
                 clearInterval(timer);
               }
             }
-          }, (i + 1) * 3000);
+          }, (i + 1) * 2000);
         })(i);
       }
     },
@@ -162,6 +185,8 @@ var VM = new Vue({
           localStorage.removeItem("three");
           this.currentUserList3 = [];
         }
+        this.lotteryBtn = "开始抽奖";
+        this.currentUser = { id: 0, phone: "" };
       }
     }
   },
