@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./kityminder.core.css" />
+  </head>
+  <body>
+    <blockquote class="mindmap">
+      <p># 主题</p>
+      <p>## 一级分支</p>
+      <p>### 二级分支</p>
+      <p>## 一级分支</p>
+      <p>## 一级分支</p>
+      <p>### 二级分支</p>
+      <p>#### 三级分支</p>
+    </blockquote>
+    <script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+    <script src="./kity.js"></script>
+    <script src="./kityminder.core.min.js"></script>
+
+    <script>
+      setTimeout(function() {
+        var minder = new kityminder.Minder({
+          renderTo: ".mindmap"
+        });
+        var markdownText = $(".mindmap")
+          .text()
+          .trim();
+        console.log(`
+# 主题
+## 一级分支
+### 二级分支
+## 一级分支
+## 一级分支
+### 二级分支
+#### 三级分支`);
+        var markdownText = `
+# 主题
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+## 一级分支
+### 二级分支
+## 一级分支
+## 一级分支
+### 二级分支
+#### 三级分支`;
+        if (!markdownText) {
+          return;
+        }
+        $(".mindmap p").each(function(index, element) {
+          element.style.display = "none";
+        });
+        minder.importData("markdown", markdownText);
+        minder.disable();
+        minder.execCommand("hand");
+      }, 0);
+    </script>
+  </body>
+</html>
