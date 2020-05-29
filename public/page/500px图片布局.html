@@ -6,6 +6,10 @@
 		<meta name="viewport" content="width=device-width" />
 		<title>JS Bin</title>
 		<base href="https://xieranmaya.github.io/images/cats/" />
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+		<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
 		<style>
 			section {
 				display: flex;
@@ -15,9 +19,10 @@
 				content: "";
 				flex-grow: 999999999;
 			}
-			div {
+			a {
+				display:block;
 				margin: 2px;
-				background-color: violet;
+				/* background-color: violet; */
 				position: relative;
 			}
 			i {
@@ -33,13 +38,14 @@
 	</head>
 	<body ng-controller="ImageLayout">
 		<section>
-			<div
+			<a  data-fancybox="gallery"
+				href="{{img.url}}";
 				ng-repeat="img in imgs"
 				style="width:{{img.width*200/img.height}}px;flex-grow:{{img.width*200/img.height}}"
 			>
 				<i style="padding-bottom:{{img.height/img.width*100}}%"></i>
 				<img src="{{img.url}}" alt="" />
-			</div>
+			</a>
 		</section>
 
 		<script>
