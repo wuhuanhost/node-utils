@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"
+			integrity="sha512-Znnj7n0C0Xz1tdk6ih39WPm3kSCTZEKnX/7WaNbySW7GFbwSjO5r9/uOAGLMbgv6llI1GdghC7xdaQsFUStM1w=="
+			crossorigin="anonymous"
+		></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.4/mobile-detect.js"></script>
+		<script>
+			//判断数组中是否包含某字符串
+			Array.prototype.contains = function (needle) {
+				for (i in this) {
+					if (this[i].indexOf(needle) > 0) return i;
+				}
+				return -1;
+			};
+
+			var device_type = navigator.userAgent; //获取userAgent信息
+			document.write(device_type + "<br/><br/><br/>"); //打印到页面
+			var md = new MobileDetect(device_type); //初始化mobile-detect
+			var os = md.os(); //获取系统
+			var model = "";
+			if (os == "iOS") {
+				//ios系统的处理
+				os = md.os() + md.version("iPhone");
+				model = md.mobile();
+			} else if (os == "AndroidOS") {
+				//Android系统的处理
+				os = md.os() + md.version("Android");
+				var sss = device_type.split(";");
+				var i = sss.contains("Build/");
+				if (i > -1) {
+					model = sss[i].substring(0, sss[i].indexOf("Build/"));
+				}
+			}
+			document.write(os + "---" + model + "<br/><br/><br/>"); //打印系统版本和手机型号
+		</script>
+
+		<script>
+			(function () {
+				var canvas = document.createElement("canvas"),
+					gl = canvas.getContext("experimental-webgl"),
+					debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+
+				document.write(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
+			})();
+
+			document.write("<br/><br/><br/>");
+			let docElement = document.documentElement;
+			document.write(
+				"浏览器可见区域宽度：" + docElement.clientWidth + "px<br/>"
+			);
+			document.write(
+				"浏览器可见区域高度：" + docElement.clientHeight + "px<br/>"
+			);
+			document.write("DPR：" + window.devicePixelRatio + "<br/><br/><br/>");
+
+			var h = "";
+			h += " 屏幕分辨率的宽：" + window.screen.width + "<br/>";
+			h += " 屏幕分辨率的高：" + window.screen.height + "<br/>";
+			h +=
+				" 你的屏幕设置是 " +
+				window.screen.colorDepth +
+				" 位彩色" +
+				"<br/><br/><br/>";
+
+			document.write(h);
+		</script>
+		<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+		<script type="text/javascript">
+			document.write(
+				"IP地址:" +
+					returnCitySN["cip"] +
+					", CID:" +
+					returnCitySN["cid"] +
+					", 地区:" +
+					returnCitySN["cname"]
+			);
+		</script>
+	</body>
+</html>
