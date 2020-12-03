@@ -5,6 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 		<script>
+			const nativeConsoleError = console.log;
+			console.error = function (...args) {  
+				nativeConsoleError.apply(this, args);
+			};
+
 			// 收集资源加载错误的方法
 			window.addEventListener(
 				"error",
@@ -62,15 +67,16 @@
 
 			// =======================================手动抛出异常=============================================
 			// throw new Error("hello");
-
+			console.error("error");
 			try {
 				//
-				console.log(c);
+				console.error(c);
 			} catch (error) {
-				console.log("c没有定义");
-			} finally {
+				console.error("c没有定义");
 				//如果手动捕获了异常之后，需要手动抛出才能被全局捕获
-				throw new Error(error);
+				// throw new Error(error);
+			} finally {
+				// console.error("finally......");
 			}
 		</script>
 	</head>
@@ -78,4 +84,17 @@
 		<!-- 模拟资源加载异常 -->
 		<img src="http://192.168.1.123:9090/abc/images/bg_0021.png" />
 	</body>
+
+	<script
+		crossorigin="anonymous"
+		integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+		src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"
+	></script>
+
+	<script>
+		console.error($.trim("  ddf"));
+		$(document).ready(function () {
+			$(".employeesPostHours").live("click", function () {});
+		});
+	</script>
 </html>
