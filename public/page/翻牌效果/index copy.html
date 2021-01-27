@@ -187,6 +187,7 @@
 					toggle: function (index) {
 						var currentCard = this.cards[index];
 						currentCard.flipped = !currentCard.flipped;
+
 						this.cards.splice(index, 1, currentCard);
 					},
 				},
