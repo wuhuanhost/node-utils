@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <input type="file" id="file" oninput="upload" />
+    <script>
+      // Content-Type: application/json
+      let data = { code: "1234", name: "yyyy" };
+      axios.post(`${this.$url}/test/testRequest`, data).then((res) => {
+        console.log("res=>", res);
+      });
+    </script>
+
+    <script>
+      function upload() {
+        // Content-Type: multipart/form-data
+        let data1 = new FormData();
+        var file = document.querySelector("#file");
+        data1.append("file", file.files[0]);
+        // axios.post(`${this.$url}/test/testRequest`, data1).then((res) => {
+        //   console.log("res=>", res);
+        // });
+
+        axios({
+          url: `${this.$url}/test/testRequest`,
+          method: "POST",
+          data: data1,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
+    </script>
+
+    <script>
+      // Content-Type: application/x-www-form-urlencoded
+      let data2 = { code: "1234", name: "yyyy" };
+      axios
+        .post(`${this.$url}/test/testRequest`, Qs.stringify(data2))
+        .then((res) => {
+          console.log("res=>", res);
+        });
+    </script>
+
+    <script>
+      // Content-Type: multipart/form-data
+      function upload123() {
+        let data1 = new FormData();
+        var file = document.querySelector("#file");
+        data1.append("file", file.files[0]);
+        $.ajax({
+          url: "php/upload.php",
+          data: data1,
+          cache: false,
+          contentType: "multipart/form-data",
+          processData: false,
+          type: "POST",
+          success: function (data) {
+            alert(data);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
