@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link
+			href="https://cdn.bootcdn.net/ajax/libs/video.js/7.18.0/video-js.min.css"
+			rel="stylesheet"
+		/>
+	</head>
+	<style>
+		.videoBox {
+			width: 100%;
+			height: 100%;
+		}
+		.videoBox video {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<body>
+		<div class="videoBox">
+			<video
+				id="example_video_1"
+				class="video-js vjs-default-skin vjs-fluid vjs-big-play-centered"
+				controls
+				muted
+				preload
+				autoplay
+				preload="none"
+				poster="https://image.juntu.com/szwc/uploads/20220111/f20819d45db97c952fc34b6d9e8e1604.jpg"
+			>
+				<source
+					src="https://bj-mp-oss.oss-cn-beijing.aliyuncs.com/IMG_1578.MP4"
+					type="video/mp4"
+				/>
+			</video>
+		</div>
+		<script src="https://cdn.bootcdn.net/ajax/libs/video.js/7.18.0/video.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/video.js/7.18.0/lang/zh-Hans.min.js"></script>
+		<script>
+			var options = {
+				autoplay: true,
+				fluid: true, //宽高自适应
+			};
+
+			var player = videojs(
+				'example_video_1',
+				options,
+				function onPlayerReady() {
+					videojs.log('播放器已经准备好了!');
+
+					// In this context, `this` is the player that was created by Video.js.<br>  // 注意，这个地方的上下文， `this` 指向的是Video.js的实例对像player
+					this.play(); //静音模式才能自动播放,iOS需要触发事件才可以播放
+
+					// How about an event listener?<br>  // 如何使用事件监听？
+					this.on('ended', function () {
+						videojs.log('播放结束了!');
+					});
+				}
+			);
+		</script>
+	</body>
+</html>
