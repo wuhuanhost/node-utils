@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>拖拽上传</title>
+    <style>
+      #drag-container {
+        width: 200px;
+        height: 200px;
+        border: 2px dotted rgb(45, 141, 236);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="drag-container">将图片拖动到此处上传</div>
+    <img src="" id="preview" />
+  </body>
+  <script>
+    const dropBox = document.querySelector("#drag-container");
+    //当拖动的元素或被选择的文本进入有效的放置目标时
+    dropBox.addEventListener("dragenter", dragEnter, false);
+    //当元素或者选择的文本被拖拽到一个有效的放置目标上时
+    dropBox.addEventListener("dragover", dragOver, false);
+    //当元素或者选择的文本被拖动时触发 drag 事件
+    dropBox.addEventListener("drop", drop, false);
+
+    function dragEnter(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    function dragOver(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    function drop(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      // 当文件拖拽到dropBox区域时,可以在该事件取到files
+      const files = e.dataTransfer.files;
+      console.log(files);
+
+      previewImg1(files);
+
+      ajaxUpload(files);
+    }
+
+    //预览图片（方式1）
+    function previewImg1(files) {
+      const fileList = Object.entries(files).map(([_, file]) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+          file.preview = e.target.result;
+        };
+        return file;
+      });
+
+      /*
+       *  file中的preview存的就是可以预览使用url,如果你需要保证fileList的顺序,
+       *  请不要使用这种方式,你可以采用索引的方式存储,来保证它的顺序一致性
+       */
+      document.querySelector("#preview").src = fileList[0].preview;
+    }
+
+    //预览图片（方式2）
+    function previewImg2(files) {
+      const fileList = Object.entries(files).map(([_, file]) => {
+        const preview = window.URL.createObjectURL(file);
+        file.preview = preview;
+        // 需要在合适的实际进行销毁,否则只有在页面卸载的时候才会自动卸载.
+        // window.URL.revokeObjectURL(preview);
+        return file;
+      });
+      document.querySelector("#preview").src = fileList[0].preview;
+    }
+
+    //上传文件
+    function ajaxUpload(files) {
+      var file = files[0];
+      var formData = new FormData();
+      formData.append("aa", file);
+      var xml = new XMLHttpRequest();
+      xml.open("post", url, false);
+      xml.send(formData);
+    }
+  </script>
+</html>

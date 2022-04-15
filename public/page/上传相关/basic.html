@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基本上传</title>
+  </head>
+  <body>
+    <input type="file" />
+    <div></div>
+
+    <script type="text/javascript">
+      // 点击上传，在div中显示图片
+      // 获取
+      let file = document.querySelector("input");
+      let div = document.querySelector("div");
+
+      file.addEventListener("change", function () {
+        // this.files：伪数组
+        // console.log( this.files[0] );
+        // 读取文件：
+        // 实例化
+        //console.dir(file);
+        let reader = new FileReader();
+        //console.dir(reader);
+        // 读取文件：base 64编码格式
+        reader.readAsDataURL(this.files[0]);
+
+        // 等读取完成之后，就会的到这个编码格式
+        reader.addEventListener("load", function () {
+          // console.log(this.result);
+          // 创建img
+          let img = document.createElement("img");
+
+          // 追加到div
+          div.appendChild(img);
+
+          // 设置
+          img.src = this.result;
+        });
+      });
+    </script>
+  </body>
+</html>

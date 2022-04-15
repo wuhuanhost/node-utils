@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>复制粘贴上传</title>
+    <style>
+      .copy {
+        width: 200px;
+        height: 200px;
+        border: 2px dotted rgb(45, 141, 236);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="copy">
+      <img src="" alt="" id="preview" />
+    </div>
+    <script>
+      var copyDiv = document.querySelector(".copy");
+      copyDiv.addEventListener("paste", function (event) {
+        console.log(event);
+        var files = event.clipboardData.files;
+        if (files.length >= 1) {
+          previewImg2(files);
+        }
+      });
+
+      function previewImg2(files) {
+        const fileList = Object.entries(files).map(([_, file]) => {
+          const preview = window.URL.createObjectURL(file);
+          file.preview = preview;
+          // 需要在合适的实际进行销毁,否则只有在页面卸载的时候才会自动卸载.
+          // window.URL.revokeObjectURL(preview);
+          return file;
+        });
+        document.querySelector("#preview").src = fileList[0].preview;
+      }
+    </script>
+  </body>
+</html>
