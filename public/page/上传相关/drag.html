@@ -15,6 +15,9 @@
         justify-content: center;
         align-items: center;
       }
+      #preview {
+        width: 600px;
+      }
     </style>
   </head>
   <body>
@@ -22,6 +25,8 @@
     <img src="" id="preview" />
   </body>
   <script>
+    //http://192.168.1.123:3000/page/%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3/drag.html
+
     const dropBox = document.querySelector("#drag-container");
     //当拖动的元素或被选择的文本进入有效的放置目标时
     dropBox.addEventListener("dragenter", dragEnter, false);
@@ -47,7 +52,7 @@
       const files = e.dataTransfer.files;
       console.log(files);
 
-      previewImg1(files);
+      previewImg2(files);
 
       ajaxUpload(files);
     }
@@ -86,9 +91,9 @@
     function ajaxUpload(files) {
       var file = files[0];
       var formData = new FormData();
-      formData.append("aa", file);
+      formData.append("avatarImage", file);
       var xml = new XMLHttpRequest();
-      xml.open("post", url, false);
+      xml.open("post", "http://192.168.1.123:3000/myupload/profile", false);
       xml.send(formData);
     }
   </script>
