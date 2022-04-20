@@ -24,6 +24,7 @@
     <div id="drag-container">将图片拖动到此处上传</div>
     <img src="" id="preview" />
   </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
   <script>
     //http://192.168.1.123:3000/page/%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3/drag.html
 
@@ -91,10 +92,25 @@
     function ajaxUpload(files) {
       var file = files[0];
       var formData = new FormData();
-      formData.append("avatarImage", file);
-      var xml = new XMLHttpRequest();
-      xml.open("post", "http://192.168.1.123:3000/myupload/profile", false);
-      xml.send(formData);
+      formData.append("file", file);
+
+      axios
+        .post("http://192.168.1.123:3000/myupload/profile", formData)
+        .then((res, err) => {
+          console.log(res);
+          console.log(err);
+        });
+      // var xml = new XMLHttpRequest();
+      // xml.open("post", "http://192.168.1.123:3000/myupload/profile");
+
+      // xml.send(formData);
+      // xml.onreadystatechange = function () {
+      //   if ((request.readyState === 4) & (request.status === 200)) {
+      //     console.log("上传成功");
+      //     var response = JSON.parse(request.responseText);
+      //     console.log(response);
+      //   }
+      // };
     }
   </script>
 </html>
